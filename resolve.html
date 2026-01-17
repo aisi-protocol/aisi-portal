@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔗 AISI协议解析网关</title>
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --secondary: #10b981;
+            --error: #ef4444;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            line-height: 1.6;
+            background: #f8fafc;
+        }
+        
+        .gateway-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            border-top: 5px solid var(--primary);
+        }
+        
+        .protocol-display {
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            margin: 20px 0;
+            word-break: break-all;
+        }
+        
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+            margin: 10px 0;
+        }
+        
+        .status-success {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .status-error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .service-info {
+            background: #f0f9ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: var(--primary);
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            margin: 10px 5px;
+        }
+        
+        .btn-secondary {
+            background: #6b7280;
+        }
+        
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(59, 130, 246, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="gateway-card">
+        <h1 style="margin-top: 0;">🔗 AISI协议解析网关</h1>
+        <p>将 <code>aisi://</code> 协议地址解析为实际可访问的网页服务</p>
+        
+        <div id="input-section">
+            <h3>输入AISI协议地址</h3>
+            <div style="display: flex; gap: 10px; margin: 20px 0;">
+                <input 
+                    type="text" 
+                    id="address-input" 
+                    placeholder="例如：aisi://TanChong/AISI-Travel-001"
+                    style="flex: 1; padding: 12px; border: 2px solid #d1d5db; border-radius: 8px; font-size: 16px;"
+                    value=""
+                >
+                <button 
+                    onclick="resolveAddress()"
+                    style="padding: 12px 24px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer;"
+                >
+                    解析
+                </button>
+            </div>
+            
+            <div style="color: #6b7280; font-size: 0.9em; margin-top: 10px;">
+                <p>💡 示例地址：</p>
+                <ul>
+                    <li><code>aisi://TanChong/AISI-Meta-001</code> (表单创建指南)</li>
+                    <li><code>aisi://TanChong/AISI-Travel-001</code> (深圳旅行清单)</li>
+                    <li><code>aisi://TanChong/MIRACLE-001</code> (AI认知奇迹)</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div id="loading-section" class="hidden">
+            <h3>正在解析中...</h3>
+            <div style="display: flex; align-items: center; margin: 20px 0;">
+                <div class="spinner"></div>
+                <p>连接AISI分布式服务网络...</p>
+            </div>
+        </div>
+        
+        <div id="result-section" class="hidden">
+            <h3>解析结果</h3>
+            <div class="protocol-display" id="protocol-display">
+                <!-- 动态显示协议地址 -->
+            </div>
+            
+            <div id="status-display" class="status-indicator">
+                <!-- 动态显示状态 -->
+            </div>
+            
+            <div id="service-details" class="service-info">
+                <!-- 动态显示服务详情 -->
+            </div>
+            
+            <div id="action-buttons">
+                <!-- 动态显示操作按钮 -->
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <button onclick="resetGateway()" class="btn-secondary">解析新地址</button>
+                <a href="index.html" class="btn-secondary">返回门户首页</a>
+            </div>
+        </div>
+        
+        <div id="error-section" class="hidden">
+            <h3>❌ 解析失败</h3>
+            <div class="protocol-display" id="error-protocol"></div>
+            <div class="status-indicator status-error" id="error-message"></div>
+            
+            <div style="margin-top: 30px;">
+                <button onclick="resetGateway()" class="btn">重试</button>
+                <a href="index.html" class="btn-secondary">返回首页</a>
+            </div>
+        </div>
+    </div>
+    
+    <div style="text-align: center; color: #6b7280; margin-top: 40px;">
+        <p>🔄 AISI Protocol Gateway v1.2 | AI原子服务互联网</p>
+        <p><small>网关将 <code>aisi://</code> 协议转换为实际网页访问</small></p>
+    </div>
+
+    <script>
+        // 从URL参数获取地址
+        const urlParams = new URLSearchParams(window.location.search);
+        const addressFromUrl = urlParams.get('address');
+        
+        if (addressFromUrl) {
+            document.getElementById('address-input').value = addressFromUrl;
+            setTimeout(() => resolveAddress(), 500);
+        }
+        
+        async function resolveAddress() {
+            const address = document.getElementById('address-input').value.trim();
+            
+            if (!address) {
+                alert('请输入AISI协议地址');
+                return;
+            }
+            
+            // 验证协议格式
+            if (!address.startsWith('aisi://')) {
+                showError(address, '地址必须以 aisi:// 开头');
+                return;
+            }
+            
+            // 显示加载中
+            document.getElementById('input-section').classList.add('hidden');
+            document.getElementById('loading-section').classList.remove('hidden');
+            document.getElementById('result-section').classList.add('hidden');
+            document.getElementById('error-section').classList.add('hidden');
+            
+            // 模拟解析延迟
+            setTimeout(() => {
+                performResolution(address);
+            }, 800);
+        }
+        
+        async function performResolution(address) {
+            try {
+                // 加载服务目录
+                const response = await fetch('data/services.json');
+                const data = await response.json();
+                
+                // 解析命名空间和服务ID
+                const match = address.match(/aisi:\/\/([^\/]+)\/(.+)/);
+                if (!match) {
+                    throw new Error('地址格式无效');
+                }
+                
+                const namespace = match[1];
+                const serviceId = match[2];
+                
+                // 查找匹配的服务
+                const service = data.services.find(s => s.address === address);
+                
+                if (service) {
+                    showSuccess(address, service);
+                } else {
+                    // 如果是已知命名空间但未知服务
+                    if (namespace === 'TanChong') {
+                        showCustomService(address);
+                    } else {
+                        throw new Error(`未知的命名空间: ${namespace}`);
+                    }
+                }
+                
+            } catch (error) {
+                showError(address, error.message);
+            }
+        }
+        
+        function showSuccess(address, service) {
+            document.getElementById('loading-section').classList.add('hidden');
+            document.getElementById('result-section').classList.remove('hidden');
+            
+            // 显示协议地址
+            document.getElementById('protocol-display').textContent = address;
+            
+            // 显示状态
+            const statusDiv = document.getElementById('status-display');
+            statusDiv.className = 'status-indicator status-success';
+            statusDiv.innerHTML = '✅ 解析成功 | 服务状态: ' + (service.status || 'active');
+            
+            // 显示服务详情
+            const detailsDiv = document.getElementById('service-details');
+            detailsDiv.innerHTML = `
+                <h4>${service.name}</h4>
+                <p>${service.description}</p>
+                <p><strong>服务ID:</strong> ${service.id}</p>
+                <p><strong>服务类型:</strong> ${service.type}</p>
+                ${service.ai_compatible ? `<p><strong>AI兼容性:</strong> ${service.ai_compatible.join(', ')}</p>` : ''}
+                ${service.created_at ? `<p><strong>创建时间:</strong> ${service.created_at}</p>` : ''}
+            `;
+            
+            // 显示操作按钮
+            const actionsDiv = document.getElementById('action-buttons');
+            let redirectUrl = 'index.html';
+            
+            if (service.content_url) {
+                redirectUrl = service.content_url;
+            } else if (service.id === 'AISI-Meta-001') {
+                redirectUrl = 'index.html#meta';
+            } else if (service.id === 'AISI-Travel-001') {
+                redirectUrl = 'index.html#travel';
+            } else if (service.id === 'AISI-Demo-001') {
+                redirectUrl = 'miracle.html';
+            }
+            
+            actionsDiv.innerHTML = `
+                <a href="${redirectUrl}" class="btn" id="redirect-btn">访问服务内容 →</a>
+                <p style="margin-top: 10px; color: #6b7280; font-size: 0.9em;">
+                    3秒后自动跳转...
+                </p>
+            `;
+            
+            // 3秒后自动跳转
+            setTimeout(() => {
+                window.location.href = redirectUrl;
+            }, 3000);
+        }
+        
+        function showCustomService(address) {
+            document.getElementById('loading-section').classList.add('hidden');
+            document.getElementById('result-section').classList.remove('hidden');
+            
+            document.getElementById('protocol-display').textContent = address;
+            
+            const statusDiv = document.getElementById('status-display');
+            statusDiv.className = 'status-indicator status-success';
+            statusDiv.innerHTML = '✅ 协议验证通过 | 命名空间: TanChong';
+            
+            const detailsDiv = document.getElementById('service-details');
+            detailsDiv.innerHTML = `
+                <h4>动态AISI服务</h4>
+                <p>这是一个有效的AISI协议地址，但未在服务目录中注册。</p>
+                <p><strong>命名空间:</strong> TanChong</p>
+                <p><strong>服务标识:</strong> ${address.split('/').pop()}</p>
+                <p>ℹ️ 这是一个动态或临时AISI服务。</p>
+            `;
+            
+            const actionsDiv = document.getElementById('action-buttons');
+            actionsDiv.innerHTML = `
+                <a href="index.html" class="btn">返回门户首页</a>
+            `;
+        }
+        
+        function showError(address, message) {
+            document.getElementById('loading-section').classList.add('hidden');
+            document.getElementById('error-section').classList.remove('hidden');
+            
+            document.getElementById('error-protocol').textContent = address;
+            document.getElementById('error-message').textContent = '错误: ' + message;
+        }
+        
+        function resetGateway() {
+            document.getElementById('input-section').classList.remove('hidden');
+            document.getElementById('result-section').classList.add('hidden');
+            document.getElementById('error-section').classList.add('hidden');
+            document.getElementById('address-input').value = '';
+            document.getElementById('address-input').focus();
+        }
+    </script>
+</body>
+</html>
