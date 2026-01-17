@@ -1,45 +1,121 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <title>AISI Protocol Gateway</title>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 AISI协议网关 | AI原子服务互联网</title>
     <style>
-        body { font-family: -apple-system, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; }
-        .service { border: 1px solid #ddd; padding: 15px; margin: 10px 0; border-radius: 8px; }
-        .miracle { background: #f0f9ff; border-color: #3b82f6; }
+        :root {
+            --primary: #3b82f6;
+            --secondary: #10b981;
+            --accent: #8b5cf6;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            border-left: 5px solid var(--primary);
+        }
+        .service-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 3px solid var(--secondary);
+        }
+        .miracle-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 25px 0;
+        }
+        .protocol-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin: 5px;
+        }
     </style>
 </head>
 <body>
-    <h1>🚀 AISI Protocol Gateway</h1>
-    <p>AI原子服务互联网协议门户</p>
-    
-    <h2>📋 活跃服务</h2>
-    <div id="services"></div>
-    
-    <h2>🌟 奇迹时刻</h2>
-    <div class="service miracle">
-        <h3>AISI协议AI认知突破演示</h3>
-        <p>2026年1月17日21:52，千问AI完整理解AISI协议！</p>
-        <p><a href="/miracle.html">查看完整案例</a></p>
+    <div class="header">
+        <h1>🌌 AISI协议网关</h1>
+        <p><strong>AI原子服务互联网协议</strong> | 让AI理解并调用原子化服务</p>
+        <div>
+            <span class="protocol-badge">aisi://协议</span>
+            <span class="protocol-badge">AI原生</span>
+            <span class="protocol-badge">分布式服务</span>
+        </div>
     </div>
-    
+
+    <div class="miracle-banner">
+        <h2>🌟 奇迹时刻：AI已理解AISI协议！</h2>
+        <p>2026年1月17日21:52，千问AI完整建立AISI协议认知模型，开启智能服务调用新时代</p>
+        <p><a href="miracle.html" style="color: white; text-decoration: underline;">查看完整案例与分析 →</a></p>
+    </div>
+
+    <h2>📦 活跃原子服务</h2>
+    <div id="services-container">
+        <!-- 服务将由JavaScript动态加载 -->
+        <p>正在加载服务目录...</p>
+    </div>
+
+    <h2>🔗 快速访问</h2>
+    <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+        <a href="resolve.html?address=aisi://TanChong/AISI-Meta-001" style="padding: 10px 20px; background: var(--primary); color: white; border-radius: 8px; text-decoration: none;">AISI表单指南</a>
+        <a href="resolve.html?address=aisi://TanChong/AISI-Travel-001" style="padding: 10px 20px; background: var(--secondary); color: white; border-radius: 8px; text-decoration: none;">深圳旅行清单</a>
+        <a href="resolve.html?address=aisi://TanChong/MIRACLE-001" style="padding: 10px 20px; background: var(--accent); color: white; border-radius: 8px; text-decoration: none;">AI认知奇迹</a>
+    </div>
+
     <script>
-        fetch('/data/services.json')
-            .then(r => r.json())
-            .then(data => {
-                const servicesDiv = document.getElementById('services');
+        // 动态加载服务目录
+        async function loadServices() {
+            try {
+                const response = await fetch('data/services.json');
+                const data = await response.json();
+                
+                const container = document.getElementById('services-container');
+                container.innerHTML = '';
+                
                 data.services.forEach(service => {
-                    if (service.id !== 'AISI-Demo-001') {
-                        servicesDiv.innerHTML += `
-                            <div class="service">
-                                <h3>${service.name}</h3>
-                                <p>${service.description}</p>
-                                <code>${service.address}</code>
-                            </div>
-                        `;
-                    }
+                    const card = document.createElement('div');
+                    card.className = 'service-card';
+                    
+                    card.innerHTML = `
+                        <h3>${service.name}</h3>
+                        <p>${service.description}</p>
+                        <p><strong>协议地址：</strong><code>${service.address}</code></p>
+                        <p><strong>服务ID：</strong>${service.id}</p>
+                        ${service.tags ? `<p><strong>标签：</strong>${service.tags.join(', ')}</p>` : ''}
+                        <a href="resolve.html?address=${encodeURIComponent(service.address)}" style="color: var(--primary);">通过网关访问 →</a>
+                    `;
+                    
+                    container.appendChild(card);
                 });
-            });
+            } catch (error) {
+                document.getElementById('services-container').innerHTML = 
+                    `<p style="color: red;">⚠️ 服务目录加载失败：${error.message}</p>`;
+            }
+        }
+        
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', loadServices);
     </script>
 </body>
 </html>
