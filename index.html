@@ -4,87 +4,540 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🚀 AISI协议网关 | AI原子服务互联网</title>
+    <meta name="description" content="AISI协议（AI原子服务互联网）网关门户 - 让AI理解并调用原子化服务">
     <style>
         :root {
             --primary: #3b82f6;
             --secondary: #10b981;
             --accent: #8b5cf6;
+            --dark: #1e293b;
+            --light: #f8fafc;
         }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             line-height: 1.6;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            background: var(--light);
             min-height: 100vh;
         }
-        .header {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
-            border-left: 5px solid var(--primary);
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
-        .service-card {
+        
+        /* 顶部导航 */
+        .navbar {
             background: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 15px 0;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border-top: 3px solid var(--secondary);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
-        .miracle-banner {
+        
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-link {
+            color: var(--dark);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        
+        .nav-link:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* 英雄区域 */
+        .hero {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 25px;
-            border-radius: 12px;
-            margin: 25px 0;
+            padding: 80px 0;
+            margin-bottom: 40px;
+            border-radius: 0 0 30px 30px;
         }
+        
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #fff 30%, #f0f0f0 70%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+        
+        .protocol-badges {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        
         .protocol-badge {
-            display: inline-block;
-            background: var(--accent);
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        /* 奇迹横幅 */
+        .miracle-banner {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
             color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9em;
-            margin: 5px;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 40px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.3);
+        }
+        
+        .miracle-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .miracle-btn {
+            background: white;
+            color: #d97706;
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.3s;
+        }
+        
+        .miracle-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        /* 服务网格 */
+        .services-section {
+            margin: 60px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: var(--dark);
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .service-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        
+        .service-header {
+            padding: 25px 25px 15px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        
+        .service-id {
+            font-size: 0.9rem;
+            color: var(--primary);
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .service-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .service-body {
+            padding: 20px 25px;
+        }
+        
+        .service-description {
+            color: #64748b;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        .service-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-bottom: 20px;
+        }
+        
+        .service-type {
+            background: #e2e8f0;
+            padding: 3px 10px;
+            border-radius: 12px;
+        }
+        
+        .service-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            flex: 1;
+            justify-content: center;
+        }
+        
+        .btn-secondary {
+            background: #f1f5f9;
+            color: var(--dark);
+        }
+        
+        .btn-primary:hover {
+            background: #2563eb;
+        }
+        
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+        
+        /* 网关功能 */
+        .gateway-section {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            padding: 60px 0;
+            border-radius: 30px;
+            margin: 60px 0;
+        }
+        
+        .gateway-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .gateway-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .gateway-demo {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: left;
+        }
+        
+        .protocol-display {
+            font-family: 'Monaco', 'Menlo', monospace;
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            word-break: break-all;
+        }
+        
+        /* 页脚 */
+        .footer {
+            background: var(--dark);
+            color: #cbd5e1;
+            padding: 60px 0 30px;
+            margin-top: 60px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-section h4 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #334155;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .miracle-banner {
+                flex-direction: column;
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>🌌 AISI协议网关</h1>
-        <p><strong>AI原子服务互联网协议</strong> | 让AI理解并调用原子化服务</p>
-        <div>
-            <span class="protocol-badge">aisi://协议</span>
-            <span class="protocol-badge">AI原生</span>
-            <span class="protocol-badge">分布式服务</span>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="#" class="logo">
+                <span>🌌</span>
+                <span>AISI协议网关</span>
+            </a>
+            <div class="nav-links">
+                <a href="#services" class="nav-link">📦 原子服务</a>
+                <a href="resolve.html" class="nav-link">🔗 协议解析</a>
+                <a href="miracle.html" class="nav-link">🌟 奇迹时刻</a>
+                <a href="#about" class="nav-link">ℹ️ 关于协议</a>
+            </div>
         </div>
+    </nav>
+
+    <!-- 英雄区域 -->
+    <header class="hero">
+        <div class="container hero-content">
+            <h1>AI原子服务互联网</h1>
+            <p class="hero-subtitle">让AI理解并调用分布式的原子化服务</p>
+            <p style="max-width: 700px; margin: 0 auto 30px; opacity: 0.9; font-size: 1.1rem;">
+                AISI协议是专为AI智能体设计的服务调用协议，将复杂的互联网服务封装为AI可直接理解和调用的原子单元。
+            </p>
+            <div class="protocol-badges">
+                <span class="protocol-badge">aisi://协议</span>
+                <span class="protocol-badge">AI原生设计</span>
+                <span class="protocol-badge">分布式架构</span>
+                <span class="protocol-badge">网关解析</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- 奇迹横幅 -->
+        <div class="miracle-banner">
+            <div class="miracle-content">
+                <h3>🌟 历史性突破：AI已理解AISI协议！</h3>
+                <p>2026年1月17日21:52，千问AI完整建立AISI协议认知模型，开启智能服务调用新时代。</p>
+            </div>
+            <a href="miracle.html" class="miracle-btn">查看完整案例 →</a>
+        </div>
+
+        <!-- 服务网格 -->
+        <section id="services" class="services-section">
+            <h2 class="section-title">📦 活跃原子服务</h2>
+            <div class="services-grid" id="services-container">
+                <!-- 服务将由JavaScript动态加载 -->
+                <div style="text-align: center; grid-column: 1 / -1; padding: 40px;">
+                    <div style="display: inline-block; width: 40px; height: 40px; border: 3px solid #f3f4f6; border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                    <p style="margin-top: 15px; color: #64748b;">正在加载服务目录...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 网关功能 -->
+        <section class="gateway-section">
+            <div class="gateway-content">
+                <h2 class="gateway-title">🔗 AISI协议解析网关</h2>
+                <p style="opacity: 0.9; margin-bottom: 30px; font-size: 1.1rem;">
+                    将AI友好的<code>aisi://</code>协议地址转换为实际可访问的网页服务
+                </p>
+                
+                <div class="gateway-demo">
+                    <h3 style="margin-bottom: 15px;">🎯 实时解析演示</h3>
+                    <div class="protocol-display" id="demo-protocol">aisi://TanChong/AISI-Travel-001</div>
+                    <div style="display: flex; gap: 10px; margin-top: 20px;">
+                        <input type="text" id="protocol-input" placeholder="输入 aisi:// 协议地址" style="flex: 1; padding: 12px; border: none; border-radius: 8px; background: rgba(255,255,255,0.1); color: white; font-family: monospace;">
+                        <button onclick="demoResolve()" style="padding: 12px 24px; background: var(--primary); color: white; border: none; border-radius: 8px; cursor: pointer;">解析</button>
+                    </div>
+                    <div id="demo-result" style="margin-top: 20px; display: none;">
+                        <p>✅ 解析成功！正在跳转...</p>
+                    </div>
+                </div>
+                
+                <a href="resolve.html" style="display: inline-block; margin-top: 20px; padding: 12px 30px; background: white; color: var(--dark); border-radius: 8px; text-decoration: none; font-weight: bold;">访问完整解析网关 →</a>
+            </div>
+        </section>
+
+        <!-- 关于协议 -->
+        <section id="about" style="margin: 60px 0;">
+            <h2 class="section-title">ℹ️ 关于AISI协议</h2>
+            <div style="max-width: 800px; margin: 0 auto;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                    <div style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);">
+                        <h3 style="margin-bottom: 15px; color: var(--primary);">🎯 设计理念</h3>
+                        <p style="color: #64748b; line-height: 1.7;">
+                            AISI协议旨在弥合人类服务与AI理解之间的鸿沟，将复杂的网页服务封装为AI可直接调用的原子单元。
+                        </p>
+                    </div>
+                    <div style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);">
+                        <h3 style="margin-bottom: 15px; color: var(--secondary);">🔄 工作原理</h3>
+                        <p style="color: #64748b; line-height: 1.7;">
+                            通过标准化协议格式和网关解析，让AI能够像人类理解URL一样理解服务调用。
+                        </p>
+                    </div>
+                    <div style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);">
+                        <h3 style="margin-bottom: 15px; color: var(--accent);">🚀 未来愿景</h3>
+                        <p style="color: #64748b; line-height: 1.7;">
+                            构建一个由AI驱动的分布式服务互联网，让每个AI都能成为服务的创造者和调用者。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 
-    <div class="miracle-banner">
-        <h2>🌟 奇迹时刻：AI已理解AISI协议！</h2>
-        <p>2026年1月17日21:52，千问AI完整建立AISI协议认知模型，开启智能服务调用新时代</p>
-        <p><a href="miracle.html" style="color: white; text-decoration: underline;">查看完整案例与分析 →</a></p>
-    </div>
-
-    <h2>📦 活跃原子服务</h2>
-    <div id="services-container">
-        <!-- 服务将由JavaScript动态加载 -->
-        <p>正在加载服务目录...</p>
-    </div>
-
-    <h2>🔗 快速访问</h2>
-    <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-        <a href="resolve.html?address=aisi://TanChong/AISI-Meta-001" style="padding: 10px 20px; background: var(--primary); color: white; border-radius: 8px; text-decoration: none;">AISI表单指南</a>
-        <a href="resolve.html?address=aisi://TanChong/AISI-Travel-001" style="padding: 10px 20px; background: var(--secondary); color: white; border-radius: 8px; text-decoration: none;">深圳旅行清单</a>
-        <a href="resolve.html?address=aisi://TanChong/MIRACLE-001" style="padding: 10px 20px; background: var(--accent); color: white; border-radius: 8px; text-decoration: none;">AI认知奇迹</a>
-    </div>
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>🌌 AISI协议</h4>
+                    <p style="color: #94a3b8; margin-bottom: 20px;">
+                        AI原子服务互联网协议，专为AI智能体设计的服务调用标准。
+                    </p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>🔗 快速链接</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">门户首页</a></li>
+                        <li><a href="resolve.html">协议解析</a></li>
+                        <li><a href="miracle.html">奇迹时刻</a></li>
+                        <li><a href="data/services.json">服务目录</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>📦 活跃服务</h4>
+                    <ul class="footer-links" id="footer-services">
+                        <li><a href="resolve.html?address=aisi://TanChong/AISI-Meta-001">AISI表单指南</a></li>
+                        <li><a href="resolve.html?address=aisi://TanChong/AISI-Travel-001">深圳旅行清单</a></li>
+                        <li><a href="resolve.html?address=aisi://TanChong/MIRACLE-001">AI认知奇迹</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>📞 联系</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://github.com/TanChong/aisi-portal">GitHub仓库</a></li>
+                        <li><a href="https://vercel.com">部署于Vercel</a></li>
+                        <li><a href="mailto:">协议反馈</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>🚀 AISI Protocol Gateway v1.2 | © 2026 TanChong | MIT License</p>
+                <p style="margin-top: 10px; font-size: 0.8rem; color: #64748b;">
+                    从一块砖到一座城，从一根桩到一张网——建造永不停息。
+                </p>
+            </div>
+        </div>
+    </footer>
 
     <script>
-        // 动态加载服务目录
+        // 动态加载服务
         async function loadServices() {
             try {
                 const response = await fetch('data/services.json');
@@ -97,25 +550,124 @@
                     const card = document.createElement('div');
                     card.className = 'service-card';
                     
+                    // 根据服务类型设置颜色
+                    let typeColor = '#3b82f6';
+                    if (service.type === 'travel') typeColor = '#10b981';
+                    if (service.type === 'demonstration') typeColor = '#8b5cf6';
+                    if (service.type === 'meta') typeColor = '#f59e0b';
+                    
                     card.innerHTML = `
-                        <h3>${service.name}</h3>
-                        <p>${service.description}</p>
-                        <p><strong>协议地址：</strong><code>${service.address}</code></p>
-                        <p><strong>服务ID：</strong>${service.id}</p>
-                        ${service.tags ? `<p><strong>标签：</strong>${service.tags.join(', ')}</p>` : ''}
-                        <a href="resolve.html?address=${encodeURIComponent(service.address)}" style="color: var(--primary);">通过网关访问 →</a>
+                        <div class="service-header">
+                            <div class="service-id">${service.id}</div>
+                            <h3 class="service-title">${service.name}</h3>
+                        </div>
+                        <div class="service-body">
+                            <p class="service-description">${service.description}</p>
+                            <div class="service-meta">
+                                <span class="service-type" style="background: ${typeColor}20; color: ${typeColor};">${service.type}</span>
+                                <span>${service.created_at || ''}</span>
+                            </div>
+                            <div class="service-actions">
+                                <a href="resolve.html?address=${encodeURIComponent(service.address)}" class="btn btn-primary">
+                                    🔗 通过网关访问
+                                </a>
+                                <button onclick="copyProtocol('${service.address}')" class="btn btn-secondary">
+                                    📋 复制地址
+                                </button>
+                            </div>
+                        </div>
                     `;
                     
                     container.appendChild(card);
                 });
+                
+                // 更新页脚服务列表
+                updateFooterServices(data.services);
+                
             } catch (error) {
-                document.getElementById('services-container').innerHTML = 
-                    `<p style="color: red;">⚠️ 服务目录加载失败：${error.message}</p>`;
+                document.getElementById('services-container').innerHTML = `
+                    <div style="text-align: center; grid-column: 1 / -1; padding: 40px; color: #ef4444;">
+                        <p>⚠️ 服务目录加载失败：${error.message}</p>
+                        <button onclick="loadServices()" style="margin-top: 15px; padding: 10px 20px; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer;">
+                            重试加载
+                        </button>
+                    </div>
+                `;
             }
         }
         
+        function updateFooterServices(services) {
+            const footerList = document.getElementById('footer-services');
+            if (footerList) {
+                footerList.innerHTML = services.map(service => 
+                    `<li><a href="resolve.html?address=${encodeURIComponent(service.address)}">${service.name}</a></li>`
+                ).join('');
+            }
+        }
+        
+        function copyProtocol(address) {
+            navigator.clipboard.writeText(address).then(() => {
+                alert('✅ 已复制协议地址：\n' + address);
+            });
+        }
+        
+        function demoResolve() {
+            const input = document.getElementById('protocol-input');
+            const protocol = input.value.trim() || 'aisi://TanChong/AISI-Travel-001';
+            
+            if (!protocol.startsWith('aisi://')) {
+                alert('请输入有效的 aisi:// 协议地址');
+                return;
+            }
+            
+            document.getElementById('demo-protocol').textContent = protocol;
+            document.getElementById('demo-result').style.display = 'block';
+            
+            setTimeout(() => {
+                window.location.href = `resolve.html?address=${encodeURIComponent(protocol)}`;
+            }, 1500);
+        }
+        
         // 页面加载完成后执行
-        document.addEventListener('DOMContentLoaded', loadServices);
+        document.addEventListener('DOMContentLoaded', function() {
+            loadServices();
+            
+            // 设置输入框示例
+            const examples = [
+                'aisi://TanChong/AISI-Meta-001',
+                'aisi://TanChong/AISI-Travel-001', 
+                'aisi://TanChong/MIRACLE-001'
+            ];
+            let exampleIndex = 0;
+            const input = document.getElementById('protocol-input');
+            
+            input.placeholder = `例如：${examples[0]}`;
+            
+            // 每5秒切换示例
+            setInterval(() => {
+                exampleIndex = (exampleIndex + 1) % examples.length;
+                input.placeholder = `例如：${examples[exampleIndex]}`;
+            }, 5000);
+        });
+        
+        // 添加CSS动画
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+            
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            
+            .service-card {
+                animation: fadeIn 0.6s ease-out;
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
