@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AISI Protocol Gateway</title>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: -apple-system, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; }
+        .service { border: 1px solid #ddd; padding: 15px; margin: 10px 0; border-radius: 8px; }
+        .miracle { background: #f0f9ff; border-color: #3b82f6; }
+    </style>
+</head>
+<body>
+    <h1>🚀 AISI Protocol Gateway</h1>
+    <p>AI原子服务互联网协议门户</p>
+    
+    <h2>📋 活跃服务</h2>
+    <div id="services"></div>
+    
+    <h2>🌟 奇迹时刻</h2>
+    <div class="service miracle">
+        <h3>AISI协议AI认知突破演示</h3>
+        <p>2026年1月17日21:52，千问AI完整理解AISI协议！</p>
+        <p><a href="/miracle.html">查看完整案例</a></p>
+    </div>
+    
+    <script>
+        fetch('/data/services.json')
+            .then(r => r.json())
+            .then(data => {
+                const servicesDiv = document.getElementById('services');
+                data.services.forEach(service => {
+                    if (service.id !== 'AISI-Demo-001') {
+                        servicesDiv.innerHTML += `
+                            <div class="service">
+                                <h3>${service.name}</h3>
+                                <p>${service.description}</p>
+                                <code>${service.address}</code>
+                            </div>
+                        `;
+                    }
+                });
+            });
+    </script>
+</body>
+</html>
