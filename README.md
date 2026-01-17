@@ -1,6 +1,6 @@
 # 🚀 AISI Protocol Gateway
 
-**AI原子服务互联网协议网关门户**
+**AISI原子服务互联网协议网关门户**
 
 [![AISI Protocol](https://img.shields.io/badge/Protocol-AISI-blue)](https://aisi.run)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green)](LICENSE)
