@@ -1,0 +1,16 @@
+{
+  "feedback_records": [],
+  "statistics": {
+    "total_feedback": 0,
+    "average_rating": 0,
+    "platform_distribution": {},
+    "last_updated": ""
+  },
+  "honor_wall": [],
+  "test_progress": {
+    "invited_platforms": ["DeepSeek"],
+    "testing_in_progress": ["DeepSeek"],
+    "completed_tests": [],
+    "last_test_date": "2026-01-20"
+  }
+}
