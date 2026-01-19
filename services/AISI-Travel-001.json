@@ -1,0 +1,131 @@
+{
+  "id": "AISI-Travel-001",
+  "name": "48小时深圳极致的体验清单",
+  "type": "travel-guide",
+  "address": "aisi://TanChong/AISI-Travel-001",
+  "description": "科技与时尚的深圳48小时深度体验",
+  "version": "1.0",
+  "author": "TanChong",
+  "created_at": "2026-01-17",
+  "updated_at": "2026-01-19",
+  "gateway": "https://aisi-protocol.github.io/aisi-portal/resolve.html",
+  "protocol": "AISI-v1",
+  "status": "active",
+  
+  "content": {
+    "title": "深圳48小时科技时尚深度游",
+    "subtitle": "极致体验，效率与品质的完美平衡",
+    "duration": "48小时",
+    "budget_level": "中高端",
+    "style": ["科技体验", "时尚购物", "美食探索", "城市文化"],
+    "target_audience": "科技爱好者、时尚达人、美食家",
+    
+    "itinerary": [
+      {
+        "day": 1,
+        "theme": "科技与创新",
+        "morning": {
+          "time": "09:00-12:00",
+          "activity": "深圳湾科技园区参观",
+          "location": "深圳湾创业广场",
+          "highlights": ["腾讯滨海大厦外观", "大疆创新旗舰店", "科技展厅参观"],
+          "tips": "建议提前预约企业参观"
+        },
+        "afternoon": {
+          "time": "14:00-18:00", 
+          "activity": "华侨城创意文化园",
+          "location": "南山区华侨城",
+          "highlights": ["创意市集", "独立设计工作室", "艺术展览"],
+          "tips": "周末有创意市集，氛围更好"
+        },
+        "evening": {
+          "time": "19:00-22:00",
+          "activity": "海岸城购物中心晚餐",
+          "location": "海岸城购物中心",
+          "highlights": ["高端餐厅", "城市夜景", "购物体验"],
+          "recommendations": ["粤菜餐厅-悦景", "创意料理-墨迹"]
+        }
+      },
+      {
+        "day": 2,
+        "theme": "时尚与城市",
+        "morning": {
+          "time": "10:00-12:00",
+          "activity": "腾讯滨海大厦体验",
+          "location": "南山区滨海大道",
+          "highlights": ["腾讯展厅", "科技互动体验", "企业文化了解"],
+          "tips": "需要提前预约参观"
+        },
+        "afternoon": {
+          "time": "14:00-17:00",
+          "activity": "华强北电子市场探索",
+          "location": "福田区华强北",
+          "highlights": ["电子产品淘货", "创客空间", "电子元器件"],
+          "tips": "注意辨别商品质量，可适当讲价"
+        },
+        "evening": {
+          "time": "18:00-21:00",
+          "activity": "平安金融中心观景",
+          "location": "平安金融中心云际观光层",
+          "highlights": ["深圳全景", "日落景观", "城市灯光秀"],
+          "tips": "建议日落前到达，观赏日夜交替"
+        }
+      }
+    ],
+    
+    "recommendations": {
+      "tech_spots": [
+        {"name": "腾讯滨海大厦", "type": "科技企业", "highlight": "中国互联网巨头总部"},
+        {"name": "华为总部", "type": "科技园区", "highlight": "全球通信技术领导者"},
+        {"name": "大疆旗舰店", "type": "零售体验", "highlight": "无人机产品体验"}
+      ],
+      "shopping": [
+        {"name": "海岸城", "type": "购物中心", "highlight": "高端品牌集中"},
+        {"name": "万象天地", "type": "商业综合体", "highlight": "时尚潮流地标"},
+        {"name": "壹方城", "type": "购物中心", "highlight": "大型商业体"}
+      ],
+      "food": [
+        {"name": "悦景酒家", "type": "粤菜", "highlight": "精致粤菜，环境优雅"},
+        {"name": "墨迹创意料理", "type": "融合菜", "highlight": "创意菜品，艺术氛围"},
+        {"name": "老街小吃", "type": "地道小吃", "highlight": "深圳本地特色"}
+      ]
+    },
+    
+    "logistics": {
+      "transportation": "地铁+网约车组合最便捷",
+      "best_season": "秋季（10月-11月）气候最舒适",
+      "budget_estimate": "人均2000-3000元（不含住宿）",
+      "accommodation": "建议选择南山或福田区酒店"
+    }
+  },
+  
+  "ai_metadata": {
+    "compatible_models": ["千问", "豆包", "DeepSeek", "ChatGPT"],
+    "purpose": "为AI提供深圳旅行规划的参考模板",
+    "deterministic": true,
+    "location": "深圳",
+    "tags": ["科技", "时尚", "美食", "购物", "城市体验"],
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "travel_date": {"type": "string", "format": "date", "description": "出行日期"},
+        "interests": {"type": "array", "description": "兴趣偏好", "items": {"type": "string", "enum": ["科技", "购物", "美食", "文化"]}},
+        "budget": {"type": "number", "description": "预算范围"}
+      }
+    },
+    "output_schema": {
+      "type": "object",
+      "properties": {
+        "itinerary": {"type": "array", "description": "行程安排"},
+        "recommendations": {"type": "object", "description": "各类推荐"},
+        "tips": {"type": "array", "description": "实用建议"}
+      }
+    }
+  },
+  
+  "tags": ["深圳", "旅行", "科技", "时尚", "美食", "48小时"],
+  "related_services": [
+    "aisi://TanChong/AISI-Meta-001",
+    "aisi://TanChong/MIRACLE-001"
+  ]
+}
