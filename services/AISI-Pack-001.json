@@ -1,0 +1,109 @@
+{
+  "AISI-Protocol-Version": "1.0",
+  "service-id": "AISI-Pack-001",
+  "service-name": "智能旅行打包原子服务",
+  "service-description": "基于目的地、季节、旅行天数和活动类型，生成个性化的旅行打包清单。这是AISI协议的原子服务样板，展示AI友好的确定性服务设计。",
+  "service-provider": "AISI Protocol Core Team",
+  "service-version": "1.0.0",
+  
+  "ai-optimized": true,
+  "ai-benefits": [
+    "明确的输入输出格式",
+    "无歧义的结果生成",
+    "支持AI自主调用和组合",
+    "提供完整的上下文信息"
+  ],
+  
+  "service-function": "生成旅行打包清单",
+  
+  "input-parameters": {
+    "destination": {
+      "type": "string",
+      "required": true,
+      "description": "旅行目的地（城市/国家）",
+      "examples": ["深圳", "东京", "巴黎", "纽约"]
+    },
+    "season": {
+      "type": "string", 
+      "required": true,
+      "enum": ["春", "夏", "秋", "冬"],
+      "description": "旅行季节"
+    },
+    "duration-days": {
+      "type": "integer",
+      "required": true,
+      "min": 1,
+      "max": 30,
+      "description": "旅行天数"
+    },
+    "activity-types": {
+      "type": "array",
+      "required": true,
+      "items": {
+        "type": "string",
+        "enum": ["商务", "休闲", "探险", "文化", "海滩", "滑雪", "城市观光"]
+      },
+      "description": "主要活动类型"
+    }
+  },
+  
+  "deterministic-examples": [
+    {
+      "example-id": "EXAMPLE-001",
+      "description": "深圳3天商务休闲旅行",
+      "input": {
+        "destination": "深圳",
+        "season": "冬",
+        "duration-days": 3,
+        "activity-types": ["商务", "城市观光"]
+      },
+      "output": {
+        "status": "success",
+        "service-id": "AISI-Pack-001",
+        "data": {
+          "packing-lists": {
+            "服装": [
+              {"name": "商务正装", "quantity": "1套", "importance": "high", "notes": "商务会议使用"},
+              {"name": "休闲服装", "quantity": "2套", "importance": "medium", "notes": "城市观光使用"}
+            ],
+            "电子设备": [
+              {"name": "笔记本电脑", "quantity": "1台", "importance": "high", "notes": "商务需求"},
+              {"name": "充电宝", "quantity": "1个", "importance": "high", "notes": "移动设备充电"}
+            ],
+            "文档": [
+              {"name": "身份证", "quantity": "1张", "importance": "high", "notes": "必须携带"},
+              {"name": "商务名片", "quantity": "10张", "importance": "medium", "notes": "商务场合使用"}
+            ]
+          },
+          "weather-advice": "深圳冬季温和，平均15-20°C，建议携带薄外套",
+          "checklist-summary": {
+            "total-items": 18,
+            "must-have-items": 12,
+            "optional-items": 6
+          }
+        },
+        "metadata": {
+          "ai-friendly": true,
+          "deterministic": true,
+          "generated-at": "2026-01-19T13:10:00Z"
+        }
+      }
+    }
+  ],
+  
+  "ai-calling-instructions": {
+    "step-1": "收集用户旅行参数",
+    "step-2": "构建符合格式的输入对象",
+    "step-3": "调用打包逻辑生成清单",
+    "step-4": "返回AISI标准格式响应",
+    "step-5": "提供清晰的可操作建议"
+  },
+  
+  "service-status": "atomic-prototype",
+  "tags": ["travel", "packing", "ai-friendly", "deterministic"],
+  
+  "related-guide": "AISI-Travel-001（深圳48小时体验指南）",
+  
+  "last-updated": "2026-01-19T13:10:00Z",
+  "service-homepage": "https://aisi-protocol.github.io/aisi-portal/"
+}
