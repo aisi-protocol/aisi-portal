@@ -1,133 +1,92 @@
 {
-  "$schema": "https://aisi-portal.vercel.app/schemas/service-schema.json",
-  "schema_version": "1.0",
-  "service_id": "AISI-Meta-001",
+  "id": "AISI-Meta-001",
   "name": "AISI表单创建指南",
-  "description": "指导AI系统如何创建和解析旅行规划类智能表单的元数据配置模板",
-  "type": "meta",
-  "domain": "travel_planning",
-  "protocol": "aisi://TanChong/AISI-Meta-001",
-  "gateway": "https://aisi-portal.vercel.app/resolve.html",
-  "structure": {
-    "form_fields": {
-      "base_info": {
-        "destination": {
-          "type": ["string", "array"],
-          "description": "目的地，支持单目的地或多目的地串联",
-          "required": true
-        },
-        "origin": {
-          "type": "string",
-          "description": "出发地，用于计算交通距离",
-          "required": true
-        },
-        "duration": {
-          "type": "object",
-          "properties": {
-            "start_date": {
-              "type": "string",
-              "format": "date"
-            },
-            "end_date": {
-              "type": "string",
-              "format": "date"
-            },
-            "total_days": {
-              "type": "integer"
-            }
-          },
-          "description": "行程时间范围",
-          "required": true
-        }
+  "type": "meta-policy",
+  "address": "aisi://TanChong/AISI-Meta-001",
+  "description": "如何创建标准的AISI原子服务表单",
+  "version": "1.0",
+  "author": "TanChong",
+  "created_at": "2026-01-17",
+  "updated_at": "2026-01-19",
+  "gateway": "https://aisi-protocol.github.io/aisi-portal/resolve.html",
+  "protocol": "AISI-v1",
+  "status": "active",
+  
+  "content": {
+    "title": "AISI原子服务表单创建标准",
+    "introduction": "本指南定义了创建AISI原子服务表单的标准化格式和要求",
+    
+    "sections": [
+      {
+        "name": "表单结构规范",
+        "items": [
+          "1. 服务标识符：必须包含 aisi:// 前缀",
+          "2. 命名空间：用户/组织标识（如 TanChong）",
+          "3. 服务类型：服务分类（如 meta, travel, tool）",
+          "4. 服务ID：唯一服务标识（如 AISI-Meta-001）",
+          "5. 版本号：语义化版本（如 v1, 001）"
+        ]
       },
-      "user_profile": {
-        "travelers": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": ["情侣", "亲子", "独行", "朋友", "家庭", "商务"]
-          },
-          "description": "同行人类型",
-          "required": true
-        },
-        "budget": {
-          "type": ["string", "number"],
-          "enum": ["经济型", "舒适型", "奢华型"],
-          "description": "预算等级或具体金额",
-          "required": true
-        }
+      {
+        "name": "表单字段要求",
+        "items": [
+          "原子化：每个表单只做一件事，功能边界清晰",
+          "确定性：输入输出关系明确，结果可预测",
+          "标准化：遵循AISI协议格式，AI可理解",
+          "完整性：包含必要的元数据字段"
+        ]
       },
-      "preferences": {
-        "interests": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "examples": [
-            ["美食", "爬山", "博物馆", "购物", "摄影", "历史", "自然"]
-          ],
-          "description": "兴趣标签"
-        },
-        "avoidances": {
-          "type": "string",
-          "description": "避雷清单，希望避免的内容"
-        },
-        "dietary_restrictions": {
-          "type": "string",
-          "description": "饮食禁忌，如：素食、过敏源"
-        }
+      {
+        "name": "AI友好设计",
+        "items": [
+          "清晰的字段描述：AI能理解每个字段的含义",
+          "结构化数据：避免自由文本，使用枚举或标准格式",
+          "错误处理：定义明确的错误响应格式",
+          "版本控制：支持平滑升级和向后兼容"
+        ]
+      }
+    ]
+  },
+  
+  "ai_metadata": {
+    "compatible_models": ["千问", "豆包", "DeepSeek", "ChatGPT", "Kimi", "文心一言"],
+    "purpose": "为AI提供标准化的原子服务创建模板",
+    "deterministic": true,
+    "atomic": true,
+    "cacheable": true,
+    "ttl": 3600,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "service_type": {"type": "string", "description": "服务类型"},
+        "fields": {"type": "array", "description": "表单字段定义"}
       }
     },
-    "workflow_logic": {
-      "reasoning_mode": "ReAct",
-      "instruction": "若关键字段（如日期、人数）缺失，必须先询问用户，不得臆测。",
-      "tool_calls": [
-        {
-          "name": "Weather_API",
-          "purpose": "获取目的地实时气候信息"
-        },
-        {
-          "name": "Map_API",
-          "purpose": "计算景点间交通耗时"
-        },
-        {
-          "name": "Search_API",
-          "purpose": "查找最新景点信息和用户评价"
-        }
-      ],
-      "output_format": "Markdown Table",
-      "output_instruction": "生成的行程必须按天数分表，包含时间段、活动内容、地点、交通方式、备注等列"
-    },
-    "prompt_template": {
-      "role": "资深旅行定制师",
-      "task": "根据表单数据生成可执行的行程单",
-      "tone": "亲切专业，使用Emoji增加可读性",
-      "required_sections": [
-        "行程概览",
-        "每日详细安排",
-        "避雷指南",
-        "行李建议",
-        "预算分类统计（交通/住宿/餐饮/门票）",
-        "紧急联系人信息"
-      ],
-      "example_output": "请参考 AISI-Travel-001 服务生成的深圳48小时行程"
+    "output_schema": {
+      "type": "object",
+      "properties": {
+        "form_template": {"type": "object", "description": "生成的表单模板"},
+        "validation_rules": {"type": "array", "description": "验证规则"}
+      }
     }
   },
-  "ai_compatibility": {
-    "verified": ["千问", "豆包", "DeepSeek"],
-    "tested_on": "2026-01-17",
-    "compatibility_level": "full"
-  },
-  "metadata": {
-    "created_at": "2026-01-17",
-    "last_updated": "2026-01-18T01:05:00+08:00",
-    "author": "TanChong",
-    "license": "MIT",
-    "version": "1.0.0"
-  },
+  
+  "examples": [
+    {
+      "address": "aisi://meta-policy/tanchong/user-profile/v1",
+      "description": "用户画像元策略服务",
+      "usage": "存储用户的AI交互偏好和约束条件"
+    },
+    {
+      "address": "aisi://travel/tanchong/shenzhen-guide/v1", 
+      "description": "深圳旅行指南服务",
+      "usage": "提供深圳旅行的智能推荐"
+    }
+  ],
+  
+  "tags": ["表单创建", "标准规范", "AI友好", "原子服务", "元数据"],
   "related_services": [
     "aisi://TanChong/AISI-Travel-001",
-    "aisi://TanChong/AISI-Whisper-001"
-  ],
-  "notes": "此配置文件基于千问AI对AISI协议的深度解析而创建，验证了AI对结构化服务内容的理解能力。千问AI曾准确预测了此文件的结构内容。"
+    "aisi://TanChong/MIRACLE-001"
+  ]
 }
