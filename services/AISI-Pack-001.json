@@ -44,6 +44,33 @@
         "enum": ["商务", "休闲", "探险", "文化", "海滩", "滑雪", "城市观光"]
       },
       "description": "主要活动类型"
+    },
+    "special-needs": {
+      "type": "array",
+      "required": false,
+      "items": {
+        "type": "string"
+      },
+      "description": "特殊需求（如：过敏药物、特殊设备等）"
+    }
+  },
+  
+  "output-format": {
+    "packing-lists": {
+      "categories": ["服装", "洗漱用品", "电子设备", "文档", "其他"],
+      "items": {
+        "name": "string",
+        "quantity": "string",
+        "importance": "high|medium|low",
+        "notes": "string"
+      }
+    },
+    "weather-advice": "string",
+    "local-tips": "string",
+    "checklist-summary": {
+      "total-items": "integer",
+      "must-have-items": "integer",
+      "optional-items": "integer"
     }
   },
   
@@ -104,6 +131,6 @@
   
   "related-guide": "AISI-Travel-001（深圳48小时体验指南）",
   
-  "last-updated": "2026-01-19T13:10:00Z",
+  "last-updated": "2026-01-19T13:45:00Z",
   "service-homepage": "https://aisi-protocol.github.io/aisi-portal/"
 }
