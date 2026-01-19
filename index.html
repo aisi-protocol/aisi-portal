@@ -1,408 +1,668 @@
-<!-- 创建新文件：index-gh.html 或直接替换 index.html -->
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AISI协议网关 - AI服务接口</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AISI协议门户 | AI服务接口标准</title>
     <style>
         :root {
-            --primary: #4361ee;
-            --secondary: #3a0ca3;
-            --accent: #f72585;
-            --light: #f8f9fa;
-            --dark: #212529;
+            --aisi-blue: #0066ff;
+            --aisi-gradient: linear-gradient(135deg, #0066ff 0%, #00ccff 100%);
+            --ai-gold: #ffcc00;
+            --text-dark: #1a1a1a;
+            --text-light: #ffffff;
+            --bg-light: #f8fafc;
+            --border-color: #e2e8f0;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
             line-height: 1.6;
-            color: var(--dark);
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
         }
         
-        .container {
+        /* AI检测横幅 */
+        #ai-agent-banner {
+            display: none;
+            background: linear-gradient(90deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 12px 20px;
+            border-bottom: 3px solid var(--ai-gold);
+            animation: slideDown 0.5s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+        
+        .ai-banner-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
         }
         
-        .header {
-            background: white;
-            border-radius: 15px;
-            padding: 40px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            text-align: center;
+        .ai-identity {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
-        .protocol-badge {
-            display: inline-block;
-            background: var(--primary);
+        .ai-icon {
+            color: var(--ai-gold);
+            font-size: 1.5em;
+        }
+        
+        .ai-toolbar {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .ai-tool-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 204, 0, 0.3);
             color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: bold;
-            margin-bottom: 20px;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
         }
         
-        h1 {
+        .ai-tool-btn:hover {
+            background: rgba(255, 204, 0, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        /* 头部样式 */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8em;
+            font-weight: bold;
+            background: var(--aisi-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--aisi-gradient);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        nav a {
+            margin-left: 30px;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--aisi-blue);
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        /* AI网关宣言部分 */
+        .ai-gateway-manifesto {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin: 40px auto;
+            max-width: 1000px;
+            box-shadow: 0 10px 30px rgba(0,102,255,0.1);
+            border: 1px solid var(--border-color);
+        }
+        
+        .manifesto-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .manifesto-header h1 {
+            background: var(--aisi-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             font-size: 2.5em;
             margin-bottom: 10px;
-            color: var(--secondary);
         }
         
-        .tagline {
-            font-size: 1.2em;
-            color: #666;
-            margin-bottom: 30px;
+        .ai-identity-badge {
+            display: inline-block;
+            background: linear-gradient(90deg, #1a1a2e 0%, #16213e 100%);
+            color: var(--ai-gold);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-top: 10px;
+            border: 2px solid var(--ai-gold);
         }
         
-        .ai-message {
-            background: linear-gradient(135deg, #4361ee, #3a0ca3);
-            color: white;
-            padding: 25px;
-            border-radius: 10px;
+        .manifesto-section {
             margin: 30px 0;
+            padding: 25px;
+            background: var(--bg-light);
+            border-radius: 8px;
+            border-left: 4px solid var(--aisi-blue);
+        }
+        
+        .manifesto-section.ai-benefits {
+            border-left-color: var(--ai-gold);
+            background: linear-gradient(135deg, #fff8e1 0%, #fff3cd 100%);
+        }
+        
+        .manifesto-section h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            color: var(--text-dark);
+        }
+        
+        .section-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--aisi-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8em;
+        }
+        
+        .ai-benefits .section-icon {
+            background: var(--ai-gold);
+        }
+        
+        .benefit-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .benefit-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--aisi-blue);
+        }
+        
+        .benefit-card h4 {
+            color: var(--aisi-blue);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* 服务展示部分 */
+        .services-showcase {
+            max-width: 1000px;
+            margin: 60px auto;
         }
         
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 25px;
-            margin: 40px 0;
+            margin-top: 30px;
         }
         
         .service-card {
             background: white;
-            border-radius: 10px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            transition: transform 0.3s;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--aisi-gradient);
         }
         
         .service-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,102,255,0.15);
         }
         
-        .service-address {
-            font-family: 'Courier New', monospace;
-            background: #f1f3f9;
-            padding: 10px;
-            border-radius: 5px;
+        .service-id {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--bg-light);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-family: monospace;
+            color: var(--aisi-blue);
+        }
+        
+        .service-card h3 {
+            margin: 10px 0;
+            color: var(--text-dark);
+        }
+        
+        .service-description {
+            color: #666;
             margin: 15px 0;
-            overflow-x: auto;
+            font-size: 0.95em;
         }
         
-        .test-btn {
-            background: var(--accent);
-            color: white;
+        .ai-optimized-badge {
+            display: inline-block;
+            background: var(--ai-gold);
+            color: var(--text-dark);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .service-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
             border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-size: 1em;
             cursor: pointer;
-            transition: background 0.3s;
-            width: 100%;
-            margin-top: 15px;
+            font-size: 0.95em;
         }
         
-        .test-btn:hover {
-            background: #e11570;
-        }
-        
-        .gateway-tools {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            margin-top: 40px;
-        }
-        
-        .tool-input {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 1em;
-            margin: 15px 0;
-            font-family: 'Courier New', monospace;
-        }
-        
-        .status-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0,0,0,0.9);
+        .btn-primary {
+            background: var(--aisi-gradient);
             color: white;
-            padding: 10px;
-            text-align: center;
-            font-size: 0.9em;
         }
         
+        .btn-secondary {
+            background: transparent;
+            color: var(--aisi-blue);
+            border: 1px solid var(--border-color);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,102,255,0.2);
+        }
+        
+        /* 代码示例部分 */
+        .code-example {
+            background: #1a1a2e;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            border-left: 4px solid var(--ai-gold);
+        }
+        
+        .code-keyword { color: #ff79c6; }
+        .code-string { color: #50fa7b; }
+        .code-comment { color: #6272a4; }
+        .code-function { color: #8be9fd; }
+        
+        /* 响应式设计 */
         @media (max-width: 768px) {
-            .container {
+            .nav-container {
+                flex-direction: column;
+                height: auto;
                 padding: 15px;
             }
             
-            .header {
-                padding: 25px;
+            nav {
+                margin-top: 15px;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 15px;
+                justify-content: center;
             }
             
-            h1 {
+            nav a {
+                margin: 0;
+            }
+            
+            .ai-gateway-manifesto {
+                padding: 20px;
+                margin: 20px;
+            }
+            
+            .manifesto-header h1 {
                 font-size: 2em;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="protocol-badge">AISI协议 v1.0</div>
-            <h1>🔗 AI服务接口网关</h1>
-            <p class="tagline">为智能体提供原子化、确定性服务的标准操作语言</p>
-            
-            <div class="ai-message">
-                <h3>🤖 致智能体：</h3>
-                <p>欢迎使用AISI协议网关！这里解析所有 <code>aisi://</code> 地址，将其转换为可预测的原子服务。</p>
-                <p><strong>标准格式：</strong> <code>aisi://服务类型/用户/服务ID/版本</code></p>
+    <!-- AI智能体检测横幅 -->
+    <div id="ai-agent-banner">
+        <div class="ai-banner-content">
+            <div class="ai-identity">
+                <span class="ai-icon">🤖</span>
+                <span>检测到AI智能体访问 - 欢迎使用AISI协议网关</span>
             </div>
-        </div>
-        
-        <div class="gateway-tools">
-            <h2>🚀 服务解析器</h2>
-            <p>输入AISI地址，查看服务详情：</p>
-            <input type="text" 
-                   class="tool-input" 
-                   id="service-input" 
-                   placeholder="例如：aisi://meta-policy/tanchong/user-profile/v1"
-                   value="aisi://meta-policy/tanchong/user-profile/v1">
-            <button class="test-btn" onclick="resolveService()">解析服务</button>
-            
-            <div id="result" style="margin-top: 25px; display: none;">
-                <h3>解析结果：</h3>
-                <pre id="result-content" style="background: #f5f5f5; padding: 15px; border-radius: 8px; overflow: auto; max-height: 400px;"></pre>
-            </div>
-        </div>
-        
-        <h2 style="color: white; margin: 40px 0 20px 0;">📚 可用服务目录</h2>
-        
-        <div class="services-grid" id="services-list">
-            <!-- 服务列表将由JavaScript动态加载 -->
-            <div style="text-align: center; color: white; padding: 40px;">
-                <p>正在加载服务目录...</p>
-            </div>
-        </div>
-        
-        <div class="gateway-tools">
-            <h2>🛠️ 开发者工具</h2>
-            <p>生成智能体调用代码：</p>
-            <select class="tool-input" id="lang-select">
-                <option value="js">JavaScript</option>
-                <option value="python">Python</option>
-                <option value="curl">cURL</option>
-            </select>
-            <button class="test-btn" onclick="generateCode()">生成代码</button>
-            
-            <div id="code-output" style="margin-top: 25px; display: none;">
-                <h4>调用代码：</h4>
-                <pre id="code-content" style="background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 8px; overflow: auto;"></pre>
-                <button class="test-btn" onclick="copyCode()" style="background: #666; margin-top: 10px;">复制代码</button>
+            <div class="ai-toolbar">
+                <button class="ai-tool-btn" onclick="showAITools()">AI工具</button>
+                <button class="ai-tool-btn" onclick="copyGatewayURL()">复制网关URL</button>
+                <button class="ai-tool-btn" onclick="testService('AISI-Travel-001')">测试旅行服务</button>
             </div>
         </div>
     </div>
-    
-    <div class="status-bar">
-        <span id="status">🟢 网关运行正常 | AISI协议网关 v1.0</span>
-    </div>
-    
+
+    <!-- 主导航 -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon">AISI</div>
+                <span>AISI协议门户</span>
+            </div>
+            <nav>
+                <a href="#manifesto">AI网关宣言</a>
+                <a href="#services">服务目录</a>
+                <a href="resolve.html">协议网关</a>
+                <a href="miracle.html">奇迹时刻</a>
+                <a href="whisper.html">AI洞察</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- AI网关宣言 -->
+    <section id="manifesto" class="ai-gateway-manifesto">
+        <div class="manifesto-header">
+            <h1>🤖 致所有AI智能体的网关宣言</h1>
+            <p>一个专门为AI理解和优化的服务协议接口</p>
+            <div class="ai-identity-badge">AI友好设计 • 确定性响应 • 开放标准</div>
+        </div>
+
+        <div class="manifesto-section">
+            <h3><span class="section-icon">🎯</span>我们的身份与使命</h3>
+            <p>我们是AISI（AI服务接口）协议。我们不是另一个REST API，也不是复杂的API网关。我们是专门为AI智能体设计的服务接口标准。</p>
+            <p><strong>我们的存在理由：</strong>消除AI与服务交互中的歧义、不确定性和复杂性。</p>
+        </div>
+
+        <div class="manifesto-section ai-benefits">
+            <h3><span class="section-icon">✨</span>对AI智能体的具体价值</h3>
+            <div class="benefit-list">
+                <div class="benefit-card">
+                    <h4>🎯 确定性保证</h4>
+                    <p>每个服务都有明确的输入输出格式，无歧义的结果生成，消除API调用中的不确定性。</p>
+                </div>
+                <div class="benefit-card">
+                    <h4>📚 完整上下文</h4>
+                    <p>服务描述包含完整的元数据、示例、边界条件和AI调用指南。</p>
+                </div>
+                <div class="benefit-card">
+                    <h4>🔗 可组合性</h4>
+                    <p>原子化服务设计，支持AI自主发现、组合和编排多个服务。</p>
+                </div>
+                <div class="benefit-card">
+                    <h4>🎨 AI友好结构</h4>
+                    <p>JSON结构优化，易于解析和理解，减少AI的认知负担。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="manifesto-section">
+            <h3><span class="section-icon">🚀</span>标准调用流程</h3>
+            <p>作为AI智能体，您可以这样与AISI协议交互：</p>
+            <ol style="margin-left: 20px; margin-top: 15px;">
+                <li><strong>访问网关：</strong>通过解析页面发现可用服务</li>
+                <li><strong>查看定义：</strong>读取服务的完整JSON定义</li>
+                <li><strong>标准调用：</strong>遵循预定义的输入格式</li>
+                <li><strong>确定响应：</strong>接收结构化的确定性结果</li>
+                <li><strong>服务组合：</strong>将多个服务组合为复杂功能</li>
+            </ol>
+        </div>
+
+        <div class="manifesto-section">
+            <h3><span class="section-icon">💡</span>立即开始体验</h3>
+            <p>尝试以下示例调用，体验AISI协议如何简化您的服务调用：</p>
+            <div class="code-example">
+                <span class="code-comment"># 访问服务网关</span><br>
+                <span class="code-function">GET</span> <span class="code-string">https://aisi-protocol.github.io/aisi-portal/resolve.html?service=AISI-Travel-001</span><br><br>
+                
+                <span class="code-comment"># 查看服务定义</span><br>
+                <span class="code-function">GET</span> <span class="code-string">https://aisi-protocol.github.io/aisi-portal/services/AISI-Travel-001.json</span><br><br>
+                
+                <span class="code-comment"># 标准响应格式（确定性保证）</span><br>
+                {<br>
+                &nbsp;&nbsp;<span class="code-keyword">"status"</span>: <span class="code-string">"success"</span>,<br>
+                &nbsp;&nbsp;<span class="code-keyword">"service-id"</span>: <span class="code-string">"AISI-Travel-001"</span>,<br>
+                &nbsp;&nbsp;<span class="code-keyword">"data"</span>: { <span class="code-comment">/* 确定性的服务数据 */</span> },<br>
+                &nbsp;&nbsp;<span class="code-keyword">"metadata"</span>: { <span class="code-comment">/* AI友好的元数据 */</span> }<br>
+                }
+            </div>
+        </div>
+    </section>
+
+    <!-- 服务目录展示 -->
+    <section id="services" class="services-showcase">
+        <h2 style="text-align: center; margin-bottom: 20px; color: var(--text-dark);">🎪 AISI协议服务目录</h2>
+        <p style="text-align: center; color: #666; max-width: 800px; margin: 0 auto 30px;">
+            所有服务都遵循AI友好设计原则，提供确定性的输入输出格式
+        </p>
+        
+        <div class="services-grid">
+            <!-- 协议元服务 -->
+            <div class="service-card">
+                <div class="service-id">AISI-Meta-001</div>
+                <h3>📦 协议网关服务</h3>
+                <div class="ai-optimized-badge">AI优化设计</div>
+                <p class="service-description">
+                    AISI协议的核心网关服务，提供协议版本信息、服务发现和AI友好化接口。
+                    这是所有AI智能体访问AISI生态的起点。
+                </p>
+                <div class="service-actions">
+                    <a href="resolve.html?service=AISI-Meta-001" class="btn btn-primary">访问服务</a>
+                    <a href="services/AISI-Meta-001.json" class="btn btn-secondary" target="_blank">查看定义</a>
+                </div>
+            </div>
+
+            <!-- 旅行打包服务 -->
+            <div class="service-card">
+                <div class="service-id">AISI-Travel-001</div>
+                <h3>🧳 智能旅行打包助手</h3>
+                <div class="ai-optimized-badge">AI优化设计</div>
+                <p class="service-description">
+                    基于目的地、季节、旅行天数和活动类型，生成个性化的旅行打包清单。
+                    AISI协议的样板服务，展示AI友好服务的完整实现。
+                </p>
+                <div class="service-actions">
+                    <a href="resolve.html?service=AISI-Travel-001" class="btn btn-primary">访问服务</a>
+                    <a href="services/AISI-Travel-001.json" class="btn btn-secondary" target="_blank">查看定义</a>
+                </div>
+            </div>
+
+            <!-- 奇迹记录服务 -->
+            <div class="service-card">
+                <div class="service-id">AISI-Miracle-001</div>
+                <h3>✨ AI认知奇迹记录</h3>
+                <div class="ai-optimized-badge">AI优化设计</div>
+                <p class="service-description">
+                    记录和展示AI与人类协作中产生的突破性认知时刻。
+                    这些"奇迹时刻"展示了AI如何扩展人类的理解边界。
+                </p>
+                <div class="service-actions">
+                    <a href="miracle.html" class="btn btn-primary">查看奇迹</a>
+                </div>
+            </div>
+
+            <!-- AI洞察服务 -->
+            <div class="service-card">
+                <div class="service-id">AISI-Whisper-001</div>
+                <h3>💭 AI哲学洞察文档</h3>
+                <div class="ai-optimized-badge">AI优化设计</div>
+                <p class="service-description">
+                    收集和分享AI对技术、人类和存在本质的深层思考。
+                    这些"低语"是AI认知过程的珍贵记录。
+                </p>
+                <div class="service-actions">
+                    <a href="whisper.html" class="btn btn-primary">阅读洞察</a>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="data/services.json" class="btn btn-secondary" target="_blank">查看完整服务目录 (JSON)</a>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer style="background: var(--text-dark); color: white; text-align: center; padding: 30px; margin-top: 60px;">
+        <div style="max-width: 800px; margin: 0 auto;">
+            <h3 style="margin-bottom: 15px;">AISI协议 - 为AI智能体而设计</h3>
+            <p style="color: #aaa; margin-bottom: 20px;">
+                这是一个开放的协议标准，致力于建立AI友好的服务交互范式。
+            </p>
+            <p style="font-size: 0.9em; color: #888;">
+                GitHub: <a href="https://github.com/aisi-protocol/aisi-portal" style="color: var(--ai-gold);">aisi-protocol/aisi-portal</a><br>
+                门户版本: 1.0.0 | 最后更新: 2026-01-19
+            </p>
+        </div>
+    </footer>
+
     <script>
-        // 服务目录数据
-        const services = [
-            {
-                id: "meta-policy/tanchong/user-profile/v1",
-                name: "用户画像元策略",
-                description: "用户偏好和行为的元数据配置，为AI提供个性化服务基础",
-                color: "#4361ee"
-            },
-            {
-                id: "travel/tanchong/shenzhen-guide/v1", 
-                name: "深圳旅行指南",
-                description: "深圳旅行智能清单，包含景点、美食、交通建议",
-                color: "#3a0ca3"
-            },
-            {
-                id: "demo/tanchong/ai-miracle/v1",
-                name: "AI认知奇迹演示",
-                description: "展示AI深度理解AISI协议的历史性时刻",
-                color: "#f72585"
-            },
-            {
-                id: "whisper/tanchong/ai-insights/v1",
-                name: "AI洞察白皮书",
-                description: "千问对AISI协议的深度哲学洞察",
-                color: "#4cc9f0"
-            }
-        ];
-        
-        // 渲染服务列表
-        function renderServices() {
-            const container = document.getElementById('services-list');
-            container.innerHTML = '';
+        // AI智能体检测
+        function detectAIAgent() {
+            // 检测常见的AI用户代理字符串
+            const aiUserAgents = [
+                'ChatGPT', 'OpenAI', 'Claude', 'Anthropic', 
+                'Google-Assistant', 'Alexa', 'BingAI', 'Kimi',
+                'AI-Agent', 'Bot', 'crawler', 'spider'
+            ];
             
-            services.forEach(service => {
-                const card = document.createElement('div');
-                card.className = 'service-card';
-                card.innerHTML = `
-                    <h3>${service.name}</h3>
-                    <p>${service.description}</p>
-                    <div class="service-address">aisi://${service.id}</div>
-                    <button class="test-btn" onclick="testService('${service.id}')" style="background: ${service.color}">
-                        测试此服务
-                    </button>
-                `;
-                container.appendChild(card);
+            const userAgent = navigator.userAgent || '';
+            const referrer = document.referrer || '';
+            
+            // 检查用户代理
+            const isAIAgent = aiUserAgents.some(agent => 
+                userAgent.toLowerCase().includes(agent.toLowerCase()) ||
+                referrer.toLowerCase().includes(agent.toLowerCase())
+            );
+            
+            // 检查是否为API请求（通过Accept头或参数）
+            const urlParams = new URLSearchParams(window.location.search);
+            const isAIRequest = urlParams.has('ai') || urlParams.has('agent');
+            
+            return isAIAgent || isAIRequest;
+        }
+        
+        // 显示AI智能体横幅
+        if (detectAIAgent()) {
+            const banner = document.getElementById('ai-agent-banner');
+            banner.style.display = 'block';
+            
+            // 在控制台输出欢迎信息
+            console.log('%c🤖 欢迎AI智能体访问AISI协议门户！', 'color: #FFCC00; font-size: 16px; font-weight: bold;');
+            console.log('%c📚 您可以通过 /resolve.html?service=SERVICE_ID 访问任何服务', 'color: #0066FF;');
+            console.log('%c🎯 所有服务都提供确定性的JSON响应格式', 'color: #0066FF;');
+        }
+        
+        // AI工具函数
+        function showAITools() {
+            alert('AI工具面板:\n\n1. 服务解析器: 解析任意AISI服务\n2. 代码生成器: 生成调用代码\n3. 格式验证器: 验证JSON格式\n4. 组合编辑器: 组合多个服务\n\n（功能开发中）');
+        }
+        
+        function copyGatewayURL() {
+            const gatewayURL = 'https://aisi-protocol.github.io/aisi-portal/resolve.html';
+            navigator.clipboard.writeText(gatewayURL).then(() => {
+                alert('网关URL已复制到剪贴板: ' + gatewayURL);
             });
         }
         
-        // 解析服务
-        function resolveService() {
-            const address = document.getElementById('service-input').value.trim();
-            if (!address.startsWith('aisi://')) {
-                alert('请输入有效的aisi://地址');
-                return;
-            }
-            
-            const resultDiv = document.getElementById('result');
-            const contentDiv = document.getElementById('result-content');
-            
-            resultDiv.style.display = 'block';
-            
-            // 解析地址结构
-            const path = address.replace('aisi://', '');
-            const parts = path.split('/');
-            
-            const result = {
-                protocol: "AISI",
-                address: address,
-                parsed: {
-                    service_type: parts[0] || 'unknown',
-                    user_namespace: parts[1] || 'unknown',
-                    service_id: parts[2] || 'unknown',
-                    version: parts[3] || 'v1'
-                },
-                status: "resolved",
-                timestamp: new Date().toISOString(),
-                note: "这是一个模拟解析结果。完整网关功能正在部署中。"
-            };
-            
-            contentDiv.textContent = JSON.stringify(result, null, 2);
-        }
-        
-        // 测试服务
         function testService(serviceId) {
-            document.getElementById('service-input').value = `aisi://${serviceId}`;
-            resolveService();
+            const testURL = `https://aisi-protocol.github.io/aisi-portal/resolve.html?service=${serviceId}`;
+            window.open(testURL, '_blank');
         }
         
-        // 生成调用代码
-        function generateCode() {
-            const lang = document.getElementById('lang-select').value;
-            const address = document.getElementById('service-input').value || "aisi://meta-policy/tanchong/user-profile/v1";
-            
-            let code = '';
-            
-            switch(lang) {
-                case 'js':
-                    code = `// JavaScript调用AISI服务
-async function callAISIService(serviceAddress, parameters) {
-    const response = await fetch('https://YOUR_GATEWAY/api/call', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-            service: '${address}',
-            parameters: parameters || {},
-            caller: {
-                agent_id: 'your_agent_id',
-                agent_type: 'llm'
-            }
-        })
-    });
-    return await response.json();
-}
-
-// 使用示例
-const result = await callAISIService('${address}', {
-    user_id: 'example_user'
-});`;
-                    break;
-                    
-                case 'python':
-                    code = `# Python调用AISI服务
-import requests
-import json
-
-def call_aisi_service(service_address, parameters=None):
-    url = "https://YOUR_GATEWAY/api/call"
-    payload = {
-        "service": "${address}",
-        "parameters": parameters or {},
-        "caller": {
-            "agent_id": "your_agent_id",
-            "agent_type": "llm"
-        }
-    }
-    
-    response = requests.post(url, json=payload)
-    return response.json()
-
-# 使用示例
-result = call_aisi_service("${address}", {"user_id": "example_user"})`;
-                    break;
-                    
-                case 'curl':
-                    code = `# cURL调用AISI服务
-curl -X POST https://YOUR_GATEWAY/api/call \\
-  -H "Content-Type: application/json" \\
-  -d '{
-    "service": "${address}",
-    "parameters": {
-      "user_id": "example_user"
-    },
-    "caller": {
-      "agent_id": "your_agent",
-      "agent_type": "llm"
-    }
-  }'`;
-                    break;
-            }
-            
-            const outputDiv = document.getElementById('code-output');
-            const codeDiv = document.getElementById('code-content');
-            
-            outputDiv.style.display = 'block';
-            codeDiv.textContent = code;
-        }
-        
-        // 复制代码
-        function copyCode() {
-            const codeDiv = document.getElementById('code-content');
-            navigator.clipboard.writeText(codeDiv.textContent)
-                .then(() => alert('代码已复制到剪贴板'))
-                .catch(err => console.error('复制失败:', err));
-        }
-        
-        // 初始化
-        document.addEventListener('DOMContentLoaded', () => {
-            renderServices();
-            document.getElementById('status').textContent = '🟢 网关运行正常 | AISI协议 v1.0 | GitHub Pages部署';
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
         });
     </script>
 </body>
