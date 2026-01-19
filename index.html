@@ -417,7 +417,7 @@
             <div class="ai-toolbar">
                 <button class="ai-tool-btn" onclick="showAITools()">AI工具</button>
                 <button class="ai-tool-btn" onclick="copyGatewayURL()">复制网关URL</button>
-                <button class="ai-tool-btn" onclick="testService('AISI-Travel-001')">测试旅行服务</button>
+                <button class="ai-tool-btn" onclick="testService('AISI-Pack-001')">测试原子服务</button>
             </div>
         </div>
     </div>
@@ -492,15 +492,15 @@
             <p>尝试以下示例调用，体验AISI协议如何简化您的服务调用：</p>
             <div class="code-example">
                 <span class="code-comment"># 访问服务网关</span><br>
-                <span class="code-function">GET</span> <span class="code-string">https://aisi-protocol.github.io/aisi-portal/resolve.html?service=AISI-Travel-001</span><br><br>
+                <span class="code-function">GET</span> <span class="code-string">https://aisi-protocol.github.io/aisi-portal/resolve.html?service=AISI-Pack-001</span><br><br>
                 
-                <span class="code-comment"># 查看服务定义</span><br>
-                <span class="code-function">GET</span> <span class="code-string">https://aisi-protocol.github.io/aisi-portal/services/AISI-Travel-001.json</span><br><br>
+                <span class="code-comment"># 查看原子服务定义</span><br>
+                <span class="code-function">GET</span> <span class="code-string">https://aisi-protocol.github.io/aisi-portal/services/AISI-Pack-001.json</span><br><br>
                 
                 <span class="code-comment"># 标准响应格式（确定性保证）</span><br>
                 {<br>
                 &nbsp;&nbsp;<span class="code-keyword">"status"</span>: <span class="code-string">"success"</span>,<br>
-                &nbsp;&nbsp;<span class="code-keyword">"service-id"</span>: <span class="code-string">"AISI-Travel-001"</span>,<br>
+                &nbsp;&nbsp;<span class="code-keyword">"service-id"</span>: <span class="code-string">"AISI-Pack-001"</span>,<br>
                 &nbsp;&nbsp;<span class="code-keyword">"data"</span>: { <span class="code-comment">/* 确定性的服务数据 */</span> },<br>
                 &nbsp;&nbsp;<span class="code-keyword">"metadata"</span>: { <span class="code-comment">/* AI友好的元数据 */</span> }<br>
                 }
@@ -516,6 +516,36 @@
         </p>
         
         <div class="services-grid">
+            <!-- 原子打包服务 -->
+            <div class="service-card">
+                <div class="service-id">AISI-Pack-001</div>
+                <h3>🧳 智能旅行打包（原子服务）</h3>
+                <div class="ai-optimized-badge">AI优化设计</div>
+                <p class="service-description">
+                    基于目的地、季节和活动类型，生成确定性的旅行打包清单。
+                    AISI原子服务样板，展示AI友好的确定性服务设计。
+                </p>
+                <div class="service-actions">
+                    <a href="resolve.html?service=AISI-Pack-001" class="btn btn-primary">访问服务</a>
+                    <a href="services/AISI-Pack-001.json" class="btn btn-secondary" target="_blank">查看定义</a>
+                </div>
+            </div>
+
+            <!-- 深圳旅游指南 -->
+            <div class="service-card">
+                <div class="service-id">AISI-Travel-001</div>
+                <h3>🏙️ 深圳48小时体验指南</h3>
+                <div class="ai-optimized-badge">内容服务</div>
+                <p class="service-description">
+                    科技与时尚的深圳48小时深度体验指南。
+                    包含详细行程、地点推荐和实用贴士。
+                </p>
+                <div class="service-actions">
+                    <a href="resolve.html?service=AISI-Travel-001" class="btn btn-primary">查看指南</a>
+                    <a href="services/AISI-Travel-001.json" class="btn btn-secondary" target="_blank">查看JSON</a>
+                </div>
+            </div>
+
             <!-- 协议元服务 -->
             <div class="service-card">
                 <div class="service-id">AISI-Meta-001</div>
@@ -528,35 +558,6 @@
                 <div class="service-actions">
                     <a href="resolve.html?service=AISI-Meta-001" class="btn btn-primary">访问服务</a>
                     <a href="services/AISI-Meta-001.json" class="btn btn-secondary" target="_blank">查看定义</a>
-                </div>
-            </div>
-
-            <!-- 旅行打包服务 -->
-            <div class="service-card">
-                <div class="service-id">AISI-Travel-001</div>
-                <h3>🧳 智能旅行打包助手</h3>
-                <div class="ai-optimized-badge">AI优化设计</div>
-                <p class="service-description">
-                    基于目的地、季节、旅行天数和活动类型，生成个性化的旅行打包清单。
-                    AISI协议的样板服务，展示AI友好服务的完整实现。
-                </p>
-                <div class="service-actions">
-                    <a href="resolve.html?service=AISI-Travel-001" class="btn btn-primary">访问服务</a>
-                    <a href="services/AISI-Travel-001.json" class="btn btn-secondary" target="_blank">查看定义</a>
-                </div>
-            </div>
-
-            <!-- 奇迹记录服务 -->
-            <div class="service-card">
-                <div class="service-id">AISI-Miracle-001</div>
-                <h3>✨ AI认知奇迹记录</h3>
-                <div class="ai-optimized-badge">AI优化设计</div>
-                <p class="service-description">
-                    记录和展示AI与人类协作中产生的突破性认知时刻。
-                    这些"奇迹时刻"展示了AI如何扩展人类的理解边界。
-                </p>
-                <div class="service-actions">
-                    <a href="miracle.html" class="btn btn-primary">查看奇迹</a>
                 </div>
             </div>
 
