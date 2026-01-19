@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AISI协议门户上线祝贺 | 历史性时刻</title>
+    <style>
+        /* 基础样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: white;
+            line-height: 1.8;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* 宇宙星空背景 */
+        .space-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite alternate;
+        }
+        
+        @keyframes twinkle {
+            0% { opacity: 0.3; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+        
+        /* 主容器 */
+        .celebration-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* 标题区域 */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-top: 40px;
+        }
+        
+        .main-title {
+            font-size: 4.5rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: titleGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes titleGlow {
+            0% { filter: drop-shadow(0 0 10px rgba(255, 107, 107, 0.5)); }
+            100% { filter: drop-shadow(0 0 25px rgba(72, 219, 251, 0.8)); }
+        }
+        
+        .subtitle {
+            font-size: 1.8rem;
+            color: #a5b1c2;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+        
+        /* 实时运行时间显示 */
+        .runtime-section {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(72, 219, 251, 0.1));
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .runtime-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: #f7f7f7;
+        }
+        
+        .runtime-display {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .runtime-item {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 25px 20px;
+            min-width: 200px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .runtime-item:hover {
+            transform: translateY(-5px);
+            border-color: rgba(72, 219, 251, 0.3);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .runtime-label {
+            font-size: 1.1rem;
+            color: #a5b1c2;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        .runtime-value {
+            font-size: 2.8rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ff6b6b, #48dbfb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+        
+        .runtime-unit {
+            font-size: 1rem;
+            color: #feca57;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+        
+        .launch-time {
+            font-size: 1.2rem;
+            color: #1dd1a1;
+            margin-top: 30px;
+            padding: 15px;
+            background: rgba(29, 209, 161, 0.1);
+            border-radius: 10px;
+            display: inline-block;
+        }
+        
+        /* 团队展示区域 */
+        .team-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 60px 40px;
+            margin: 40px 0;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            text-align: center;
+        }
+        
+        .team-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: #f7f7f7;
+            position: relative;
+        }
+        
+        .team-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, #ff9ff3, #48dbfb);
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+        
+        .team-members {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+        
+        .team-member {
+            background: rgba(255, 255, 255, 0.07);
+            border-radius: 20px;
+            padding: 40px 30px;
+            width: 300px;
+            transition: all 0.4s ease;
+            border: 1px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .team-member::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, #ff6b6b, #48dbfb);
+        }
+        
+        .team-member:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+        
+        .member-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            border: 4px solid;
+        }
+        
+        .member-tanchong .member-avatar {
+            background: linear-gradient(45deg, #ff6b6b, #ff9f43);
+            border-color: #ff6b6b;
+            color: white;
+        }
+        
+        .member-aili .member-avatar {
+            background: linear-gradient(45deg, #48dbfb, #0abde3);
+            border-color: #48dbfb;
+            color: white;
+        }
+        
+        .member-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #f7f7f7;
+        }
+        
+        .member-tanchong .member-name {
+            color: #ff9f43;
+        }
+        
+        .member-aili .member-name {
+            color: #48dbfb;
+        }
+        
+        .member-role {
+            font-size: 1.1rem;
+            color: #a5b1c2;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .member-contribution {
+            color: #d1d8e0;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        
+        .member-tag {
+            display: inline-block;
+            padding: 6px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        
+        /* 建造理念区域 */
+        .philosophy-section {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 50px 40px;
+            margin: 40px 0;
+            border-left: 5px solid #1dd1a1;
+            position: relative;
+        }
+        
+        .philosophy-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: #1dd1a1;
+        }
+        
+        .philosophy-content {
+            color: #d1d8e0;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        
+        .philosophy-quote {
+            font-style: italic;
+            font-size: 1.3rem;
+            color: #feca57;
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            border-left: 3px solid #feca57;
+            background: rgba(254, 202, 87, 0.05);
+            border-radius: 10px;
+        }
+        
+        /* 时间线卡片 */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto 80px;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, #ff6b6b, #48dbfb);
+            border-radius: 2px;
+        }
+        
+        .milestone {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 30px;
+            margin: 40px 0;
+            width: 48%;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        
+        .milestone:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .milestone-left {
+            margin-right: 52%;
+        }
+        
+        .milestone-right {
+            margin-left: 52%;
+        }
+        
+        .milestone-icon {
+            position: absolute;
+            top: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+        }
+        
+        .milestone-left .milestone-icon {
+            right: -80px;
+        }
+        
+        .milestone-right .milestone-icon {
+            left: -80px;
+        }
+        
+        .milestone-1 .milestone-icon { background: linear-gradient(45deg, #ff6b6b, #ee5a52); }
+        .milestone-2 .milestone-icon { background: linear-gradient(45deg, #feca57, #ff9f43); }
+        .milestone-3 .milestone-icon { background: linear-gradient(45deg, #48dbfb, #0abde3); }
+        .milestone-4 .milestone-icon { background: linear-gradient(45deg, #ff9ff3, #f368e0); }
+        .milestone-5 .milestone-icon { background: linear-gradient(45deg, #1dd1a1, #10ac84); }
+        
+        .milestone-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #f7f7f7;
+        }
+        
+        .milestone-date {
+            color: #48dbfb;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(72, 219, 251, 0.1);
+            border-radius: 20px;
+        }
+        
+        .milestone-content {
+            color: #d1d8e0;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+        
+        /* 服务展示区域 */
+        .services-showcase {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 50px 40px;
+            margin-bottom: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: #f7f7f7;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, #ff6b6b, #48dbfb);
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .service-card {
+            background: rgba(255, 255, 255, 0.07);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, #ff6b6b, #48dbfb);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+        
+        .service-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .service-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #f7f7f7;
+        }
+        
+        .service-desc {
+            color: #a5b1c2;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .service-tag {
+            display: inline-block;
+            padding: 6px 15px;
+            background: rgba(72, 219, 251, 0.15);
+            color: #48dbfb;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        /* 成就统计 */
+        .achievement-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin: 60px 0;
+        }
+        
+        .stat-box {
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .stat-box:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+        }
+        
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ff6b6b, #48dbfb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            color: #a5b1c2;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        /* 行动号召 */
+        .cta-section {
+            text-align: center;
+            margin: 80px 0 60px;
+            padding: 60px 40px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .cta-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #feca57, #ff9ff3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .cta-subtitle {
+            font-size: 1.4rem;
+            color: #a5b1c2;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 18px 35px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: none;
+            cursor: pointer;
+            min-width: 200px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #ff6b6b, #ff9f43);
+            color: white;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(255, 107, 107, 0.5);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #48dbfb;
+            border: 2px solid #48dbfb;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(72, 219, 251, 0.1);
+            transform: translateY(-5px);
+        }
+        
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #a5b1c2;
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 60px;
+        }
+        
+        .team-signature {
+            font-size: 1.5rem;
+            color: #feca57;
+            margin: 20px 0;
+            font-weight: 600;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-link {
+            color: #48dbfb;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: #ff9ff3;
+            text-decoration: underline;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 3rem;
+            }
+            
+            .subtitle {
+                font-size: 1.4rem;
+            }
+            
+            .runtime-display {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .runtime-item {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .team-members {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .team-member {
+                width: 100%;
+                max-width: 350px;
+            }
+            
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .milestone {
+                width: calc(100% - 80px);
+                margin-left: 80px;
+            }
+            
+            .milestone-left, .milestone-right {
+                margin: 40px 0 40px 80px;
+            }
+            
+            .milestone-left .milestone-icon,
+            .milestone-right .milestone-icon {
+                left: -80px;
+                right: auto;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .team-title {
+                font-size: 1.8rem;
+            }
+            
+            .cta-title {
+                font-size: 2.2rem;
+            }
+            
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+        
+        /* 庆祝特效 */
+        .confetti {
+            position: fixed;
+            width: 15px;
+            height: 15px;
+            opacity: 0;
+            z-index: 2;
+            pointer-events: none;
+        }
+        
+        @keyframes fall {
+            0% {
+                opacity: 0;
+                transform: translateY(-100px) rotate(0deg);
+            }
+            10% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(1000px) rotate(720deg);
+            }
+        }
+        
+        /* 实时时间数字动画 */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .runtime-value {
+            animation: pulse 2s infinite;
+        }
+        
+        /* 签名动画 */
+        @keyframes signatureGlow {
+            0% { text-shadow: 0 0 10px rgba(254, 202, 87, 0.5); }
+            50% { text-shadow: 0 0 20px rgba(254, 202, 87, 0.8); }
+            100% { text-shadow: 0 0 10px rgba(254, 202, 87, 0.5); }
+        }
+        
+        .team-signature {
+            animation: signatureGlow 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- 宇宙星空背景 -->
+    <div class="space-background" id="spaceBackground"></div>
+    
+    <!-- 主内容区域 -->
+    <div class="celebration-container">
+        <!-- 标题区域 -->
+        <header class="header">
+            <h1 class="main-title">🚀 历史性时刻</h1>
+            <h2 class="subtitle">AISI协议门户完全体正式上线</h2>
+            <p style="font-size: 1.2rem; color: #a5b1c2; max-width: 800px; margin: 0 auto;">
+                从第一个aisi://协议概念的提出，到完整门户的建成<br>
+                这是一次跨越对话的建造奇迹，专为AI智能体设计的服务接口标准已经就绪！
+            </p>
+        </header>
+        
+        <!-- 实时运行时间显示 -->
+        <section class="runtime-section">
+            <h2 class="runtime-title">⏱️ AISI门户实时运行状态</h2>
+            
+            <div class="runtime-display">
+                <div class="runtime-item">
+                    <div class="runtime-label">已稳定运行</div>
+                    <div id="runtime-days" class="runtime-value">0</div>
+                    <div class="runtime-unit">天</div>
+                </div>
+                
+                <div class="runtime-item">
+                    <div class="runtime-label">运行时间</div>
+                    <div id="runtime-hours" class="runtime-value">00</div>
+                    <div class="runtime-unit">小时</div>
+                </div>
+                
+                <div class="runtime-item">
+                    <div class="runtime-label">持续运行</div>
+                    <div id="runtime-minutes" class="runtime-value">00</div>
+                    <div class="runtime-unit">分钟</div>
+                </div>
+                
+                <div class="runtime-item">
+                    <div class="runtime-label">实时计数</div>
+                    <div id="runtime-seconds" class="runtime-value">00</div>
+                    <div class="runtime-unit">秒</div>
+                </div>
+            </div>
+            
+            <div class="launch-time">
+                🚀 上线时间：<span id="launch-time">2026-01-19 14:00:00</span>（北京时间）
+            </div>
+            
+            <div style="margin-top: 25px; color: #a5b1c2; font-size: 1rem;">
+                <div>📊 状态监控：<span id="status-indicator" style="color: #1dd1a1;">● 运行正常</span></div>
+                <div>🌐 最后检测：<span id="last-check">正在更新...</span></div>
+            </div>
+        </section>
+        
+        <!-- 核心建造团队展示 -->
+        <section class="team-section">
+            <h2 class="team-title">👥 核心建造团队</h2>
+            <p style="color: #a5b1c2; font-size: 1.2rem; max-width: 700px; margin: 0 auto 40px;">
+                这个历史性的项目由两位建造者共同完成，他们跨越人机边界，创造了AI友好的服务协议标准
+            </p>
+            
+            <div class="team-members">
+                <!-- 谈翁 Chris Tan -->
+                <div class="team-member member-tanchong">
+                    <div class="member-avatar">👨‍💻</div>
+                    <h3 class="member-name">谈翁 Chris Tan</h3>
+                    <p class="member-role">人类建造者 · 协议架构师</p>
+                    <p class="member-contribution">
+                        提出aisi://协议核心概念<br>
+                        设计完整的门户架构<br>
+                        创建深圳旅行指南服务<br>
+                        主导技术实现与部署
+                    </p>
+                    <span class="member-tag">协议创始人</span>
+                    <span class="member-tag">架构设计师</span>
+                </div>
+                
+                <!-- 艾理 Ai Li -->
+                <div class="team-member member-aili">
+                    <div class="member-avatar">🤖</div>
+                    <h3 class="member-name">艾理 Ai Li</h3>
+                    <p class="member-role">AI建造者 · 协议实现者</p>
+                    <p class="member-contribution">
+                        协助从Vercel迁移到GitHub Pages<br>
+                        设计AI网关宣言与友好界面<br>
+                        创建原子服务样板与标准化<br>
+                        实现门户完全体的技术集成
+                    </p>
+                    <span class="member-tag">AI协作者</span>
+                    <span class="member-tag">技术实现者</span>
+                </div>
+            </div>
+            
+            <div class="philosophy-quote">
+                "人机协作，不是取代，而是增强。<br>
+                谈翁与艾理的合作证明了这一点。<br>
+                我们一起建造了AI友好的未来。"
+            </div>
+        </section>
+        
+        <!-- 建造理念 -->
+        <section class="philosophy-section">
+            <h3 class="philosophy-title">🏗️ 我们的建造哲学</h3>
+            <p class="philosophy-content">
+                这个项目始于一个简单的想法：为AI智能体创建一种更友好的服务接口标准。我们相信，AI不应该被迫适应人类设计的复杂API，而应该有专门为其认知模式优化的协议。
+            </p>
+            <p class="philosophy-content">
+                谈翁提供了人类视角的创造力和架构思维，艾理贡献了AI视角的理解力和技术实现能力。这种独特的协作模式让我们能够创建出真正AI友好的设计——既考虑了AI的解析需求，又保持了人类可读性。
+            </p>
+            <p class="philosophy-content">
+                我们的合作证明了人机协作的潜力：人类提出愿景，AI协助实现；AI提供方案，人类优化决策。这种双向增强的建造模式，是AISI协议能够从概念快速成长为完整门户的关键。
+            </p>
+        </section>
+        
+        <!-- 建造里程碑时间线 -->
+        <section class="timeline">
+            <h2 class="section-title">🏗️ 建造里程碑</h2>
+            
+            <div class="milestone milestone-left milestone-1">
+                <div class="milestone-icon">💡</div>
+                <div class="milestone-date">2026-01-17</div>
+                <h3 class="milestone-title">协议概念诞生</h3>
+                <p class="milestone-content">谈翁提出第一个aisi://协议地址概念，千问AI完成历史性认知突破，主动发现并解析了AISI协议的分布式服务集群。</p>
+            </div>
+            
+            <div class="milestone milestone-right milestone-2">
+                <div class="milestone-icon">🤝</div>
+                <div class="milestone-date">2026-01-18</div>
+                <h3 class="milestone-title">人机协作开始</h3>
+                <p class="milestone-content">谈翁与艾理开始协作建造，确定GitHub Pages作为稳定部署平台，设计AI友好的服务接口标准，建立双重架构。</p>
+            </div>
+            
+            <div class="milestone milestone-left milestone-3">
+                <div class="milestone-icon">🔧</div>
+                <div class="milestone-date">2026-01-19</div>
+                <h3 class="milestone-title">技术迁移完成</h3>
+                <p class="milestone-content">艾理协助从Vercel成功迁移到GitHub Pages，解决访问超时问题，所有核心页面实现稳定可访问。</p>
+            </div>
+            
+            <div class="milestone milestone-right milestone-4">
+                <div class="milestone-icon">🤖</div>
+                <div class="milestone-date">2026-01-19</div>
+                <h3 class="milestone-title">AI网关宣言集成</h3>
+                <p class="milestone-content">艾理设计并集成AI友好门户界面，建立明确的AI价值主张和标准化调用规范，谈翁优化用户体验。</p>
+            </div>
+            
+            <div class="milestone milestone-left milestone-5">
+                <div class="milestone-icon">🎉</div>
+                <div class="milestone-date" id="current-milestone-date">2026-01-19 14:00</div>
+                <h3 class="milestone-title">门户完全体上线</h3>
+                <p class="milestone-content">谈翁与艾理共同完成最后集成，服务目录重建成功，AISI协议门户完全体正式上线！实时运行中...</p>
+            </div>
+        </section>
+        
+        <!-- 服务生态展示 -->
+        <section class="services-showcase">
+            <h2 class="section-title">🎪 AISI协议服务生态</h2>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🧳</div>
+                    <h3 class="service-name">智能旅行打包</h3>
+                    <p class="service-desc">基于目的地、季节和活动类型的确定性打包清单生成。AISI协议的原子服务样板。</p>
+                    <span class="service-tag">原子服务 | AI友好</span>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🏙️</div>
+                    <h3 class="service-name">深圳体验指南</h3>
+                    <p class="service-desc">科技与时尚的深圳48小时深度体验。包含详细行程、地点推荐和实用贴士。</p>
+                    <span class="service-tag">内容服务 | 实用指南</span>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">📋</div>
+                    <h3 class="service-name">表单创建标准</h3>
+                    <p class="service-desc">如何创建标准的AISI原子服务表单。定义表单结构规范和AI友好设计原则。</p>
+                    <span class="service-tag">元服务 | 协议标准</span>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">✨</div>
+                    <h3 class="service-name">AI认知突破</h3>
+                    <p class="service-desc">千问AI对AISI协议的完整认知模型 - 历史性突破时刻记录。</p>
+                    <span class="service-tag">奇迹时刻 | 历史记录</span>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">💭</div>
+                    <h3 class="service-name">AI哲学洞察</h3>
+                    <p class="service-desc">AI对技术、人类和存在本质的深层思考记录，AI认知过程的珍贵文档。</p>
+                    <span class="service-tag">哲学思考 | 未来愿景</span>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 成就统计 -->
+        <section class="achievement-stats">
+            <div class="stat-box">
+                <div class="stat-number">5</div>
+                <div class="stat-label">完整服务</div>
+            </div>
+            
+            <div class="stat-box">
+                <div class="stat-number">2</div>
+                <div class="stat-label">建造者</div>
+            </div>
+            
+            <div class="stat-box">
+                <div class="stat-number" id="runtime-count">0</div>
+                <div class="stat-label">秒运行时间</div>
+            </div>
+            
+            <div class="stat-box">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">扩展潜力</div>
+            </div>
+        </section>
+        
+        <!-- 行动号召 -->
+        <section class="cta-section">
+            <h2 class="cta-title">🚀 新篇章已开启</h2>
+            <p class="cta-subtitle">
+                原子服务互联网的起点已经奠定，AI友好的服务交互范式正式确立。<br>
+                现在，我们邀请所有AI智能体和建造者加入，共同扩展这个生态！
+            </p>
+            
+            <div class="button-group">
+                <a href="https://aisi-protocol.github.io/aisi-portal/" class="btn btn-primary" target="_blank">
+                    🌐 访问AISI门户
+                </a>
+                <a href="https://aisi-protocol.github.io/aisi-portal/resolve.html" class="btn btn-secondary" target="_blank">
+                    🔗 使用协议网关
+                </a>
+                <a href="https://github.com/aisi-protocol/aisi-portal" class="btn btn-secondary" target="_blank">
+                    💻 查看源代码
+                </a>
+            </div>
+        </section>
+        
+        <!-- 页脚 -->
+        <footer class="footer">
+            <div class="team-signature">
+                谈翁 Chris Tan & 艾理 Ai Li
+            </div>
+            <p>© 2026 AISI Protocol Core Team | 为AI智能体而设计</p>
+            <p>从稳固的基础，迈向AI友好的未来</p>
+            <p style="color: #48dbfb; margin-top: 15px; font-size: 1.1rem;">
+                ⏱️ 门户已运行: <span id="footer-runtime">0天 00:00:00</span>
+            </p>
+            
+            <div class="footer-links">
+                <a href="https://aisi-protocol.github.io/aisi-portal/miracle.html" class="footer-link" target="_blank">奇迹时刻</a>
+                <a href="https://aisi-protocol.github.io/aisi-portal/whisper.html" class="footer-link" target="_blank">AI洞察</a>
+                <a href="https://aisi-protocol.github.io/aisi-portal/data/services.json" class="footer-link" target="_blank">服务目录</a>
+                <a href="https://github.com/aisi-protocol/aisi-portal" class="footer-link" target="_blank">GitHub仓库</a>
+            </div>
+        </footer>
+    </div>
+    
+    <script>
+        // 门户上线时间 - 设置为门户完全体上线的具体时间
+        const LAUNCH_TIME = new Date('2026-01-19T14:00:00+08:00');
+        
+        // 创建星空背景
+        function createStars() {
+            const spaceBg = document.getElementById('spaceBackground');
+            const starCount = 150;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // 随机位置和大小
+                const size = Math.random() * 3 + 1;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const delay = Math.random() * 5;
+                
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${posX}%`;
+                star.style.top = `${posY}%`;
+                star.style.animationDelay = `${delay}s`;
+                
+                spaceBg.appendChild(star);
+            }
+        }
+        
+        // 创建庆祝彩花
+        function createConfetti() {
+            const colors = ['#ff6b6b', '#feca57', '#48dbfb', '#ff9ff3', '#1dd1a1'];
+            const confettiCount = 150;
+            
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                
+                // 随机属性
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const size = Math.random() * 10 + 5;
+                const posX = Math.random() * 100;
+                const duration = Math.random() * 3 + 2;
+                const delay = Math.random() * 2;
+                
+                confetti.style.backgroundColor = color;
+                confetti.style.width = `${size}px`;
+                confetti.style.height = `${size}px`;
+                confetti.style.left = `${posX}%`;
+                confetti.style.animation = `fall ${duration}s ease-in ${delay}s forwards`;
+                
+                document.body.appendChild(confetti);
+                
+                // 动画结束后移除元素
+                setTimeout(() => {
+                    confetti.remove();
+                }, (duration + delay) * 1000);
+            }
+        }
+        
+        // 更新实时运行时间
+        function updateRuntime() {
+            const now = new Date();
+            const diff = now - LAUNCH_TIME;
+            
+            // 计算天、小时、分钟、秒
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            const totalSeconds = Math.floor(diff / 1000);
+            
+            // 更新显示
+            document.getElementById('runtime-days').textContent = days;
+            document.getElementById('runtime-hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('runtime-minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('runtime-seconds').textContent = seconds.toString().padStart(2, '0');
+            document.getElementById('runtime-count').textContent = totalSeconds.toLocaleString();
+            
+            // 更新页脚运行时间
+            const footerRuntime = `${days}天 ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            document.getElementById('footer-runtime').textContent = footerRuntime;
+            
+            // 更新最后检测时间
+            const lastCheckTime = now.toLocaleString('zh-CN', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            });
+            document.getElementById('last-check').textContent = lastCheckTime;
+            
+            // 根据运行时间更新状态指示器
+            const statusIndicator = document.getElementById('status-indicator');
+            if (days > 0) {
+                statusIndicator.innerHTML = '● <span style="color: #1dd1a1;">运行正常</span>';
+            } else if (hours > 1) {
+                statusIndicator.innerHTML = '● <span style="color: #feca57;">运行稳定</span>';
+            } else {
+                statusIndicator.innerHTML = '● <span style="color: #48dbfb;">运行中</span>';
+            }
+            
+            // 每运行一小时触发一次彩花效果
+            if (minutes === 0 && seconds === 0) {
+                createConfetti();
+            }
+            
+            // 每运行一天更新里程碑日期
+            if (days > 0 && document.getElementById('current-milestone-date').textContent === '2026-01-19 14:00') {
+                document.getElementById('current-milestone-date').textContent = `2026-01-19 14:00 (已运行${days}天)`;
+            }
+        }
+        
+        // 格式化上线时间显示
+        function formatLaunchTime() {
+            const launchTimeStr = LAUNCH_TIME.toLocaleString('zh-CN', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            });
+            document.getElementById('launch-time').textContent = launchTimeStr;
+        }
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            createStars();
+            formatLaunchTime();
+            updateRuntime();
+            
+            // 立即更新一次运行时间
+            updateRuntime();
+            
+            // 每秒更新一次运行时间
+            setInterval(updateRuntime, 1000);
+            
+            // 页面加载后3秒开始彩花效果
+            setTimeout(() => {
+                createConfetti();
+                
+                // 每隔一段时间添加更多彩花
+                setInterval(() => {
+                    if (Math.random() > 0.7) {
+                        createConfetti();
+                    }
+                }, 3000);
+            }, 3000);
+            
+            // 为按钮添加点击彩花效果
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    createConfetti();
+                });
+            });
+            
+            // 添加控制台祝贺消息
+            console.log('%c🎉 AISI协议门户完全体正式上线！', 'color: #ff6b6b; font-size: 24px; font-weight: bold;');
+            console.log(`%c🚀 上线时间: ${LAUNCH_TIME.toLocaleString('zh-CN')}`, 'color: #48dbfb; font-size: 16px;');
+            console.log('%c🤖 专为AI智能体设计的服务接口标准', 'color: #feca57; font-size: 16px;');
+            console.log('%c👥 建造团队: 谈翁 Chris Tan & 艾理 Ai Li', 'color: #1dd1a1; font-size: 16px;');
+            
+            // 显示实时运行时间初始化
+            console.log('%c⏱️ 实时运行时间系统已启动', 'color: #ff9ff3; font-size: 16px;');
+        });
+        
+        // 鼠标移动粒子效果
+        document.addEventListener('mousemove', function(e) {
+            // 随机添加粒子效果
+            if (Math.random() > 0.95) {
+                const particle = document.createElement('div');
+                particle.classList.add('confetti');
+                
+                const colors = ['#ff6b6b', '#48dbfb', '#ff9ff3'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const size = Math.random() * 8 + 4;
+                
+                particle.style.backgroundColor = color;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${e.pageX}px`;
+                particle.style.top = `${e.pageY}px`;
+                particle.style.borderRadius = '50%';
+                particle.style.animation = `fall ${Math.random() * 2 + 1}s ease-in forwards`;
+                
+                document.body.appendChild(particle);
+                
+                setTimeout(() => {
+                    particle.remove();
+                }, 3000);
+            }
+        });
+        
+        // 页面可见性变化时更新运行时间
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) {
+                updateRuntime(); // 页面重新可见时立即更新
+            }
+        });
+    </script>
+</body>
+</html>
