@@ -1,57 +1,138 @@
 {
-  "version": "1.4",
-  "last_updated": "2026-01-19T12:45:00+08:00",
+  "version": "2.0",
+  "last_updated": "2026-01-19T14:00:00+08:00",
   "gateway": "https://aisi-protocol.github.io/aisi-portal/resolve.html",
   "base_url": "https://aisi-protocol.github.io/aisi-portal",
+  "ai_optimized": true,
+  "protocol_version": "AISI-v1",
+  "description": "AISI协议完整服务目录 - 为AI智能体优化的原子服务生态系统",
+  
   "services": [
     {
-      "id": "AISI-Meta-001",
-      "name": "AISI表单创建指南",
-      "type": "meta",
-      "address": "aisi://TanChong/AISI-Meta-001",
-      "description": "如何创建标准的AISI原子服务表单",
+      "id": "AISI-Pack-001",
+      "name": "智能旅行打包原子服务",
+      "type": "atomic-service",
+      "address": "aisi://TanChong/AISI-Pack-001",
+      "description": "基于目的地、季节和活动类型的确定性打包清单生成。AISI协议的原子服务样板，展示AI友好的确定性服务设计。",
       "gateway": "https://aisi-protocol.github.io/aisi-portal/resolve.html",
-      "content_url": "https://aisi-protocol.github.io/aisi-portal/services/AISI-Meta-001.json",
-      "ai_compatible": ["千问", "豆包", "DeepSeek", "ChatGPT"],
+      "content_url": "https://aisi-protocol.github.io/aisi-portal/services/AISI-Pack-001.json",
+      "ai_compatible": ["千问", "豆包", "DeepSeek", "ChatGPT", "Claude", "Gemini", "通义千问"],
       "status": "active",
-      "created_at": "2026-01-17"
+      "created_at": "2026-01-19",
+      "updated_at": "2026-01-19",
+      "tags": ["原子服务", "AI友好", "确定性响应", "样板服务", "旅行"],
+      "ai_optimized": true,
+      "deterministic": true,
+      "atomic": true
     },
     {
       "id": "AISI-Travel-001",
-      "name": "48小时深圳极致的体验清单",
-      "type": "travel",
+      "name": "48小时深圳极致体验指南",
+      "type": "content-service",
       "address": "aisi://TanChong/AISI-Travel-001",
-      "description": "科技与时尚的深圳48小时深度体验",
+      "description": "科技与时尚的深圳48小时深度体验。包含详细行程、地点推荐和实用贴士。",
       "gateway": "https://aisi-protocol.github.io/aisi-portal/resolve.html",
       "content_url": "https://aisi-protocol.github.io/aisi-portal/services/AISI-Travel-001.json",
-      "ai_compatible": ["千问", "豆包", "DeepSeek"],
+      "ai_compatible": ["千问", "豆包", "DeepSeek", "ChatGPT"],
       "status": "active",
-      "created_at": "2026-01-17"
+      "created_at": "2026-01-17",
+      "updated_at": "2026-01-19",
+      "tags": ["深圳", "旅行指南", "科技", "时尚", "美食"],
+      "ai_optimized": false,
+      "content_type": "travel-guide"
+    },
+    {
+      "id": "AISI-Meta-001",
+      "name": "AISI表单创建标准指南",
+      "type": "meta-service",
+      "address": "aisi://TanChong/AISI-Meta-001",
+      "description": "如何创建标准的AISI原子服务表单。定义表单结构规范和AI友好设计原则。",
+      "gateway": "https://aisi-protocol.github.io/aisi-portal/resolve.html",
+      "content_url": "https://aisi-protocol.github.io/aisi-portal/services/AISI-Meta-001.json",
+      "ai_compatible": ["千问", "豆包", "DeepSeek", "ChatGPT", "Claude"],
+      "status": "active",
+      "created_at": "2026-01-17",
+      "updated_at": "2026-01-19",
+      "tags": ["元服务", "协议标准", "表单规范", "AI友好设计"],
+      "ai_optimized": true
     },
     {
       "id": "AISI-Demo-001",
-      "name": "AISI协议AI认知突破演示",
+      "name": "AI认知突破历史记录",
       "type": "demonstration",
       "address": "aisi://TanChong/MIRACLE-001",
-      "description": "基于千问AI对话AISI协议的完整认知模型 - 历史性突破时刻",
+      "description": "千问AI对AISI协议的完整认知模型 - 历史性突破时刻。记录了AI如何理解aisi://协议并主动发现服务。",
       "gateway": "https://aisi-protocol.github.io/aisi-portal/resolve.html",
       "content_url": "https://aisi-protocol.github.io/aisi-portal/miracle.html",
-      "ai_compatible": ["千问", "豆包", "DeepSeek"],
+      "ai_compatible": ["千问", "豆包", "DeepSeek", "ChatGPT", "Claude"],
       "status": "active",
       "created_at": "2026-01-17",
-      "message": "奇迹时刻：'2026-01-17T21:52:00+08:00'",
-      "tags": ["AI认知突破", "协议验证", "历史里程碑"]
+      "updated_at": "2026-01-19",
+      "message": "奇迹时刻！2026-01-17T21:52:00+08:00",
+      "tags": ["AI认知突破", "协议验证", "历史里程碑", "千问AI"],
+      "category": "ai-cognition",
+      "historical_significance": true
     },
     {
       "id": "AISI-Whisper-001",
-      "name": "AISI协议AI洞察白皮书",
-      "type": "vision",
+      "name": "AI哲学洞察白皮书",
+      "type": "vision-document",
       "address": "aisi://TanChong/AISI-Whisper-001",
-      "description": "千问AI对AISI协议的深度哲学思考与未来预言",
+      "description": "AI对技术、人类和存在本质的深层思考记录。这些'低语'是AI认知过程的珍贵记录。",
       "gateway": "https://aisi-protocol.github.io/aisi-portal/resolve.html",
       "content_url": "https://aisi-protocol.github.io/aisi-portal/whisper.html",
-      "ai_compatible": ["千问", "DeepSeek"],
-      "tags": ["哲学洞察", "未来预言", "AI设计参与"]
+      "ai_compatible": ["千问", "豆包", "DeepSeek", "ChatGPT", "Claude"],
+      "status": "active",
+      "created_at": "2026-01-18",
+      "updated_at": "2026-01-19",
+      "tags": ["哲学", "AI思考", "认知记录", "未来愿景"],
+      "category": "philosophy"
     }
-  ]
+  ],
+  
+  "service_statistics": {
+    "total_services": 5,
+    "atomic_services": 1,
+    "content_services": 2,
+    "documentation_services": 2,
+    "ai_optimized_services": 3,
+    "active_services": 5
+  },
+  
+  "service_categories": {
+    "atomic_services": ["AISI-Pack-001"],
+    "content_services": ["AISI-Travel-001", "AISI-Meta-001"],
+    "demonstration": ["AISI-Demo-001"],
+    "vision": ["AISI-Whisper-001"]
+  },
+  
+  "ai_benefits": [
+    "确定性响应保证 - 消除API调用中的不确定性",
+    "标准化接口格式 - AI易于理解和解析",
+    "完整服务元数据 - 提供充分的上下文信息",
+    "原子化服务设计 - 支持AI自主组合和编排",
+    "协议级兼容性 - 专为AI智能体优化设计"
+  ],
+  
+  "protocol_features": [
+    "aisi://协议地址解析",
+    "GitHub Pages静态部署",
+    "JSON标准化响应",
+    "AI友好元数据结构",
+    "渐进式增强支持"
+  ],
+  
+  "quick_links": {
+    "gateway": "https://aisi-protocol.github.io/aisi-portal/resolve.html",
+    "portal": "https://aisi-protocol.github.io/aisi-portal/",
+    "miracle": "https://aisi-protocol.github.io/aisi-portal/miracle.html",
+    "whisper": "https://aisi-protocol.github.io/aisi-portal/whisper.html",
+    "github_repo": "https://github.com/aisi-protocol/aisi-portal"
+  },
+  
+  "maintenance": {
+    "last_validated": "2026-01-19T14:00:00+08:00",
+    "validation_status": "all_services_accessible",
+    "next_scheduled_check": "2026-01-26T14:00:00+08:00"
+  }
 }
