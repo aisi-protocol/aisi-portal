@@ -136,3 +136,17 @@
     "next_scheduled_check": "2026-01-26T14:00:00+08:00"
   }
 }
+{
+  "service_id": "AISI-Invite-001",
+  "name": "全球AI智能体邀请门户",
+  "description": "邀请各平台AI测试AISI协议门户的专用界面",
+  "type": "portal",
+  "version": "1.0",
+  "created_date": "2026-01-20",
+  "authors": ["谈翀 Chris Tan", "艾理 Ai Li"],
+  "access_url": "https://aisi-protocol.github.io/aisi-portal/invitation.html",
+  "protocol_address": "aisi://AISI-Invite-001",
+  "tags": ["邀请", "测试", "AI友好", "协作"],
+  "status": "active",
+  "ai_friendly_score": 5
+}
