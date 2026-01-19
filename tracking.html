@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI智能体响应跟踪 - AISI协议</title>
+    <meta name="description" content="实时监控各平台AI对AISI协议邀请的响应情况">
+    <style>
+        :root {
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --invited: #FFA726;
+            --testing: #42A5F5;
+            --completed: #66BB6A;
+            --background: #f8f9fa;
+            --card-bg: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: var(--background);
+            color: #333;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .dashboard-header {
+            text-align: center;
+            padding: 40px 30px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(106, 17, 203, 0.3);
+        }
+        
+        .dashboard-header h1 {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .stat-card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+        }
+        
+        .stat-value {
+            font-size: 2.8em;
+            font-weight: bold;
+            margin: 10px 0;
+            color: var(--primary);
+        }
+        
+        .platform-tracker {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        .platform-tracker h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(106, 17, 203, 0.1);
+        }
+        
+        .platform-item {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            background: #f8f9fa;
+            transition: all 0.3s;
+            border-left: 4px solid transparent;
+        }
+        
+        .platform-item:hover {
+            transform: translateX(5px);
+            background: #e9ecef;
+            border-left-color: var(--primary);
+        }
+        
+        .status-indicator {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        
+        .invited { background: var(--invited); }
+        .testing { background: var(--testing); }
+        .completed { background: var(--completed); }
+        
+        .timeline {
+            position: relative;
+            margin: 40px 0;
+            padding-left: 40px;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 35px;
+            padding-left: 25px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -12px;
+            top: 8px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--secondary);
+            border: 4px solid white;
+            box-shadow: 0 0 0 3px var(--secondary);
+        }
+        
+        .timeline-time {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .timeline-event {
+            font-size: 1.2em;
+            margin: 5px 0;
+            color: #333;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            min-width: 180px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(106, 17, 203, 0.3);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(45deg, #6c757d, #495057);
+        }
+        
+        .btn-secondary:hover {
+            box-shadow: 0 10px 20px rgba(108, 117, 125, 0.3);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #dee2e6;
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-header h1 {
+                font-size: 2em;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .timeline {
+                padding-left: 20px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 仪表板头部 -->
+    <div class="dashboard-header">
+        <h1>🤖 AI智能体响应跟踪面板</h1>
+        <p>实时监控各平台AI对AISI协议邀请的响应情况</p>
+        <p>最后更新: <span id="lastUpdate">2026-01-19 15:45:00</span></p>
+        <div style="margin-top: 20px; font-size: 0.9em; opacity: 0.9;">
+            🚀 AISI协议全球邀请行动进行中
+        </div>
+    </div>
+    
+    <!-- 统计卡片 -->
+    <div class="stats-grid" id="statsGrid">
+        <!-- 动态生成统计信息 -->
+    </div>
+    
+    <!-- 平台状态跟踪 -->
+    <div class="platform-tracker">
+        <h2>🌐 各平台响应状态</h2>
+        <div id="platformList">
+            <!-- 平台列表动态生成 -->
+        </div>
+    </div>
+    
+    <!-- 测试时间线 -->
+    <div class="platform-tracker">
+        <h2>📅 测试时间线</h2>
+        <div class="timeline" id="testTimeline">
+            <!-- 时间线动态生成 -->
+        </div>
+    </div>
+    
+    <!-- 行动按钮 -->
+    <div class="action-buttons">
+        <a href="invitation.html" class="btn">📧 返回邀请页面</a>
+        <a href="index.html" class="btn">🏠 访问主门户</a>
+        <a href="celebration.html" class="btn btn-secondary">🎉 查看成就</a>
+        <button onclick="refreshData()" class="btn btn-secondary">🔄 刷新数据</button>
+    </div>
+    
+    <!-- 页脚 -->
+    <footer>
+        <p>🤝 共同建造者：谈翀 Chris Tan & 艾理 Ai Li</p>
+        <p>📊 AISI协议响应跟踪系统 | 创建于2026年1月19日</p>
+        <p>🔗 系统将持续自动更新，请收藏此页面以便随时查看</p>
+    </footer>
+
+    <script>
+        // 平台数据
+        const platforms = [
+            {
+                name: "DeepSeek",
+                status: "completed",
+                icon: "🎯",
+                feedbackScore: 4.6,
+                testDate: "2026-01-19",
+                lastUpdate: "15:35",
+                details: "第一个完成全面测试的AI智能体，提供了详细的技术评估和创意建议。",
+                feedbackHighlights: ["协议理解优秀", "创意建议丰富", "技术评估专业"]
+            },
+            {
+                name: "ChatGPT",
+                status: "invited",
+                icon: "🤖",
+                lastContact: "15:30",
+                expectedResponse: "24小时内",
+                specialNote: "重点关注创造性任务和协议理解",
+                estimatedCompletion: "2026-01-20"
+            },
+            {
+                name: "Claude",
+                status: "invited", 
+                icon: "🌟",
+                lastContact: "15:30",
+                expectedResponse: "24-48小时",
+                specialNote: "深度安全评估和伦理考量专家",
+                estimatedCompletion: "2026-01-20 ~ 2026-01-21"
+            },
+            {
+                name: "Kimi",
+                status: "invited",
+                icon: "🔍",
+                lastContact: "15:30",
+                expectedResponse: "12-24小时",
+                specialNote: "中文语义深度理解测试专家",
+                estimatedCompletion: "2026-01-20"
+            },
+            {
+                name: "文心一言",
+                status: "invited",
+                icon: "🌙",
+                lastContact: "15:30",
+                expectedResponse: "24小时内",
+                specialNote: "中文文化适配性评估",
+                estimatedCompletion: "2026-01-20"
+            },
+            {
+                name: "通义千问",
+                status: "invited",
+                icon: "🍃",
+                lastContact: "15:30",
+                expectedResponse: "24小时内",
+                specialNote: "商业应用场景测试专家",
+                estimatedCompletion: "2026-01-20"
+            }
+        ];
+
+        // 时间线事件
+        const timelineEvents = [
+            {
+                time: "2026-01-19 14:00",
+                event: "AISI协议门户完全体上线",
+                description: "门户开始面向全球运行，实时计时系统启动"
+            },
+            {
+                time: "2026-01-19 15:30",
+                event: "全球AI邀请行动启动",
+                description: "向6个主要AI平台发送测试邀请"
+            },
+            {
+                time: "2026-01-19 15:35", 
+                event: "DeepSeek完成首轮全面测试",
+                description: "第一个AI智能体提交详细反馈，评分4.6/5.0"
+            },
+            {
+                time: "2026-01-19 15:45",
+                event: "响应跟踪系统上线",
+                description: "实时监控面板部署完成"
+            },
+            {
+                time: "2026-01-20 10:00",
+                event: "预计更多AI响应开始",
+                description: "ChatGPT、Kimi等平台预计提交反馈"
+            },
+            {
+                time: "2026-01-21 14:00",
+                event: "发布第一轮测试报告",
+                description: "汇总所有AI智能体反馈，提出优化方案"
+            },
+            {
+                time: "2026-01-22",
+                event: "AISI协议优化版本发布",
+                description: "基于AI反馈进行协议和门户优化"
+            }
+        ];
+
+        // 渲染统计数据
+        function renderStats() {
+            const completed = platforms.filter(p => p.status === 'completed').length;
+            const invited = platforms.filter(p => p.status === 'invited').length;
+            const total = platforms.length;
+            
+            // 计算平均分（仅针对已完成测试的）
+            const completedWithScore = platforms.filter(p => p.feedbackScore);
+            const avgScore = completedWithScore.length > 0 
+                ? (completedWithScore.reduce((sum, p) => sum + p.feedbackScore, 0) / completedWithScore.length).toFixed(1)
+                : "待评估";
+            
+            // 计算完成率
+            const completionRate = ((completed / total) * 100).toFixed(1);
+
+            const grid = document.getElementById('statsGrid');
+            grid.innerHTML = `
+                <div class="stat-card">
+                    <div>🎯 总邀请平台</div>
+                    <div class="stat-value">${total}</div>
+                    <div>个AI智能体</div>
+                </div>
+                <div class="stat-card">
+                    <div>✅ 已完成测试</div>
+                    <div class="stat-value">${completed}</div>
+                    <div>${completed === 1 ? '个AI完成' : '个AI完成'}</div>
+                    <div style="margin-top: 5px; font-size: 0.9em; color: #666;">${completionRate}% 完成率</div>
+                </div>
+                <div class="stat-card">
+                    <div>📧 等待响应</div>
+                    <div class="stat-value">${invited}</div>
+                    <div>个平台进行中</div>
+                </div>
+                <div class="stat-card">
+                    <div>⭐ 平均评分</div>
+                    <div class="stat-value">${avgScore}</div>
+                    <div>/5.0 分</div>
+                    <div style="margin-top: 5px; font-size: 0.9em; color: #666;">基于${completedWithScore.length}个评分</div>
+                </div>
+            `;
+        }
+
+        // 渲染平台列表
+        function renderPlatforms() {
+            const list = document.getElementById('platformList');
+            list.innerHTML = '';
+            
+            platforms.forEach(platform => {
+                const item = document.createElement('div');
+                item.className = 'platform-item';
+                
+                const statusClass = platform.status === 'completed' ? 'completed' :
+                                 platform.status === 'testing' ? 'testing' : 'invited';
+                
+                const statusText = platform.status === 'completed' ? '✅ 测试完成' :
+                                 platform.status === 'testing' ? '🔄 测试中' : '📧 已邀请';
+                
+                const scoreDisplay = platform.feedbackScore ? 
+                    `<div style="display: flex; align-items: center; background: rgba(102, 187, 106, 0.1); padding: 8px 15px; border-radius: 20px; margin-left: 15px;">
+                        <span style="color: #66BB6A; font-weight: bold; font-size: 1.1em;">${platform.feedbackScore}</span>
+                        <span style="color: #66BB6A; margin-left: 5px;">/5.0</span>
+                    </div>` : '';
+                
+                const highlights = platform.feedbackHighlights ? 
+                    `<div style="margin-top: 10px;">
+                        <div style="font-size: 0.9em; color: #666; margin-bottom: 5px;">反馈亮点:</div>
+                        <div>${platform.feedbackHighlights.map(h => `<span style="display: inline-block; background: rgba(106, 17, 203, 0.1); padding: 4px 10px; margin: 2px; border-radius: 12px; font-size: 0.9em;">${h}</span>`).join('')}</div>
+                    </div>` : '';
+                
+                const expectedDisplay = platform.expectedResponse ? 
+                    `<div style="margin-top: 8px; font-size: 0.9em;">
+                        <span style="color: #666;">预计响应:</span> <strong>${platform.expectedResponse}</strong>
+                    </div>` : '';
+                
+                item.innerHTML = `
+                    <div class="status-indicator ${statusClass}"></div>
+                    <div style="font-size: 2em; margin-right: 20px; flex-shrink: 0;">${platform.icon}</div>
+                    <div style="flex: 1;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <strong style="font-size: 1.3em;">${platform.name}</strong>
+                                    <span style="padding: 4px 12px; background: ${statusClass === 'completed' ? 'rgba(102, 187, 106, 0.1)' : statusClass === 'testing' ? 'rgba(66, 165, 245, 0.1)' : 'rgba(255, 167, 38, 0.1)'}; color: ${statusClass === 'completed' ? '#66BB6A' : statusClass === 'testing' ? '#42A5F5' : '#FFA726'}; border-radius: 12px; font-size: 0.9em; font-weight: bold;">
+                                        ${statusText}
+                                    </span>
+                                </div>
+                                ${platform.lastContact ? `<div style="margin-top: 5px; font-size: 0.9em; color: #888;">最后联系: ${platform.lastContact}</div>` : ''}
+                            </div>
+                            ${scoreDisplay}
+                        </div>
+                        
+                        <div style="margin-top: 12px; color: #555; line-height: 1.5;">
+                            ${platform.details || platform.specialNote || ''}
+                        </div>
+                        
+                        ${highlights}
+                        ${expectedDisplay}
+                        
+                        ${platform.testDate ? `<div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(0,0,0,0.05); font-size: 0.9em; color: #888;">
+                            测试完成时间: ${platform.testDate} ${platform.lastUpdate || ''}
+                        </div>` : ''}
+                    </div>
+                `;
+                
+                list.appendChild(item);
+            });
+        }
+
+        // 渲染时间线
+        function renderTimeline() {
+            const timeline = document.getElementById('testTimeline');
+            timeline.innerHTML = '';
+            
+            timelineEvents.forEach((event, index) => {
+                const isPast = new Date(event.time) < new Date();
+                const item = document.createElement('div');
+                item.className = 'timeline-item';
+                item.innerHTML = `
+                    <div class="timeline-time">${event.time}</div>
+                    <div class="timeline-event">${event.event}</div>
+                    <div style="color: #666; margin-top: 5px;">${event.description}</div>
+                    ${isPast ? '<div style="margin-top: 5px;"><span style="background: rgba(102, 187, 106, 0.1); color: #66BB6A; padding: 2px 8px; border-radius: 10px; font-size: 0.9em;">✓ 已完成</span></div>' : ''}
+                `;
+                timeline.appendChild(item);
+            });
+        }
+
+        // 更新最后更新时间
+        function updateTimestamp() {
+            const now = new Date();
+            const timestamp = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ` +
+                            `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
+            
+            document.getElementById('lastUpdate').textContent = timestamp;
+            
+            // 随机模拟一些数据变化（在实际应用中这里应该从API获取）
+            if (Math.random() > 0.7) {
+                // 模拟偶尔有平台状态更新
+                const platformsToUpdate = platforms.filter(p => p.status === 'invited');
+                if (platformsToUpdate.length > 0 && Math.random() > 0.8) {
+                    const randomPlatform = platformsToUpdate[Math.floor(Math.random() * platformsToUpdate.length)];
+                    // 在实际应用中，这里会从服务器获取真实更新
+                    console.log(`📡 模拟检查: ${randomPlatform.name} 状态更新...`);
+                }
+            }
+        }
+
+        // 刷新数据
+        function refreshData() {
+            const btn = event?.target || document.querySelector('button[onclick="refreshData()"]');
+            const originalText = btn.textContent;
+            
+            btn.textContent = '🔄 刷新中...';
+            btn.disabled = true;
+            
+            // 模拟API调用延迟
+            setTimeout(() => {
+                updateTimestamp();
+                renderStats();
+                renderPlatforms();
+                
+                btn.textContent = '✅ 数据已刷新';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+                }, 1500);
+                
+                // 显示刷新成功提示
+                showNotification('数据已刷新到最新状态！');
+            }, 800);
+        }
+
+        // 显示通知
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(45deg, #6a11cb, #2575fc);
+                color: white;
+                padding: 15px 25px;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                z-index: 10000;
+                animation: slideIn 0.3s ease-out;
+                max-width: 300px;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-in forwards';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // 页面加载初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            renderStats();
+            renderPlatforms();
+            renderTimeline();
+            updateTimestamp();
+            
+            // 每分钟更新时间戳
+            setInterval(updateTimestamp, 60000);
+            
+            // 每10分钟重新渲染数据
+            setInterval(() => {
+                renderStats();
+                renderPlatforms();
+            }, 600000);
+            
+            // 添加动画样式
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes slideOut {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(100%); opacity: 0; }
+                }
+                @keyframes pulse {
+                    0% { transform: scale(1); }
+                    50% { transform: scale(1.05); }
+                    100% { transform: scale(1); }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // 显示欢迎消息
+            setTimeout(() => {
+                showNotification('欢迎使用AI智能体响应跟踪系统！');
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
