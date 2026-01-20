@@ -2,9 +2,9 @@
 
 **AISI原子服务互联网协议网关门户**
 
-[![AISI Protocol](https://img.shields.io/badge/Protocol-AISI-blue)](https://aisi.run)
+[![AISI Protocol]([(https://aisi-ptotocol.github.io/aisi-portal))](https://aisi-ptotocol.github.io/aisi-portal)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green)](LICENSE)
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black)](https://vercel.com)
+[![Deployed on GitHub](https://aisi-ptotocol.github.io/aisi-portal)](https:github.com)
 
 ## 🌌 项目概述
 
@@ -92,10 +92,10 @@ AI或用户输入 aisi:// 协议地址
 
 🔗 相关链接
 
-主门户: https://aisi.vercel.app
-服务目录: https://aisi.vercel.app/data/services.json
-解析网关: https://aisi.vercel.app/resolve.html
-奇迹页面: https://aisi.vercel.app/miracle.html
+主门户: https://aisi-ptotocol.github.io/aisi-portal
+服务目录: https://aisi-ptotocol.github.io/aisi-portal/data/services.json
+解析网关: https://aisi-ptotocol.github.io/aisi-portal/resolve.html
+奇迹页面: https://aisi-ptotocol.github.io/aisi-portal/miracle.html
 🛠️ 技术栈
 
 前端: 纯HTML/CSS/JavaScript
