@@ -2,88 +2,445 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AISI协议解析网关</title>
     <style>
-        /* 保留原有样式，仅修改内容 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        h2 {
+            color: #4a5568;
+            margin: 30px 0 15px 0;
+            font-size: 1.5rem;
+        }
+        
+        h3 {
+            color: #4a5568;
+            margin: 25px 0 10px 0;
+            font-size: 1.2rem;
+        }
+        
+        p {
+            color: #718096;
+            margin-bottom: 20px;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0 30px 0;
+        }
+        
+        #uri-input {
+            flex: 1;
+            padding: 14px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        #uri-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        button {
+            padding: 14px 28px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .examples {
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 30px 0;
+            border-left: 4px solid #667eea;
+        }
+        
+        ul {
+            list-style: none;
+            margin: 15px 0;
+        }
+        
+        li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        li:last-child {
+            border-bottom: none;
+        }
+        
+        code {
+            background: #edf2f7;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #2d3748;
+            font-size: 14px;
+            display: inline-block;
+            margin: 3px 0;
+        }
+        
+        small {
+            color: #a0aec0;
+            font-size: 14px;
+        }
+        
+        #result, #error {
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 20px 0;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        #result-content {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-size: 14px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            white-space: pre-wrap;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .button-group button {
+            padding: 10px 20px;
+            font-size: 14px;
+        }
+        
+        .button-group button:last-child {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #718096;
+            font-size: 14px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #48bb78;
+            color: white;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        @media (max-width: 640px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .input-group {
+                flex-direction: column;
+            }
+            
+            button {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>AISI协议解析网关</h1>
-        <p>将 aisi:// 协议地址解析为实际可访问的网页服务</p>
+        <h1>🔗 AISI协议解析网关</h1>
+        <p>将 <code>aisi://</code> 协议地址解析为实际可访问的网页服务</p>
         
-        <h2>输入AISI协议地址</h2>
+        <h2>📝 输入AISI协议地址</h2>
         <div class="input-group">
             <input type="text" id="uri-input" 
-                   placeholder="例如：aisi://AISI/Weather-001?city=北京">
-            <button onclick="resolveProtocol()">解析</button>
+                   placeholder="例如：aisi://AISI/Weather-001?city=北京"
+                   value="aisi://AISI/Weather-001?city=北京">
+            <button onclick="resolveProtocol()">🚀 解析</button>
         </div>
 
         <div class="examples">
-            <h3>可用示例：</h3>
+            <h3>✅ 可用示例服务：</h3>
             <ul>
-                <li><code>aisi://AISI/Weather-001?city=北京</code>（天气查询）</li>
-                <li><code>aisi://AISI/IP-Info-001?ip=8.8.8.8</code>（IP地理信息）</li>
-                <li><code>aisi://AISI/Holiday-CN-001?date=2026-01-22</code>（节假日）</li>
+                <li>
+                    <code>aisi://AISI/Weather-001?city=北京</code>
+                    <span class="status-badge">在线</span>
+                    <br><small>天气查询服务 - 获取城市当前天气</small>
+                </li>
+                <li>
+                    <code>aisi://AISI/IP-Info-001?ip=8.8.8.8</code>
+                    <span class="status-badge">在线</span>
+                    <br><small>IP地理信息 - 查询IP地址地理位置</small>
+                </li>
+                <li>
+                    <code>aisi://AISI/Holiday-CN-001?date=2026-01-22</code>
+                    <span class="status-badge">在线</span>
+                    <br><small>节假日查询 - 检查中国节假日信息</small>
+                </li>
             </ul>
-            <h3>开发者服务：</h3>
+            
+            <h3>🔧 开发者服务：</h3>
             <ul>
-                <li><code>aisi://TanChong/AISI-Meta-001</code>（表单创建指南）</li>
-                <li><code>aisi://TanChong/AISI-Travel-001</code>（深圳旅行清单）</li>
+                <li>
+                    <code>aisi://TanChong/AISI-Meta-001</code>
+                    <span class="status-badge">维护中</span>
+                    <br><small>表单创建指南 - AISI服务定义助手</small>
+                </li>
+                <li>
+                    <code>aisi://TanChong/AISI-Travel-001</code>
+                    <span class="status-badge">维护中</span>
+                    <br><small>深圳旅行清单 - 示例旅行规划服务</small>
+                </li>
             </ul>
-            <p><small>注：开发者服务可能处于维护状态，标准服务保证可用</small></p>
+            
+            <p><small>💡 提示：点击示例地址可直接填充到输入框，然后点击解析按钮</small></p>
+            <p><small>⚠️ 注：开发者服务可能处于维护状态，标准服务保证可用性</small></p>
         </div>
 
         <div id="result" style="display:none;">
-            <h3>解析结果</h3>
+            <h3>📦 解析结果</h3>
+            <div style="margin: 15px 0;">
+                <strong>原始URI：</strong>
+                <code id="original-uri"></code>
+            </div>
             <pre id="result-content"></pre>
-            <button onclick="goBack()">返回</button>
+            <div class="button-group">
+                <button onclick="copyResult()">📋 复制结果</button>
+                <button onclick="goBack()">↩️ 返回</button>
+            </div>
         </div>
 
         <div id="error" style="display:none;">
-            <h3>解析失败</h3>
+            <h3>❌ 解析失败</h3>
             <p id="error-message"></p>
-            <button onclick="retry()">重试</button>
-            <button onclick="goHome()">返回首页</button>
+            <div class="button-group">
+                <button onclick="retry()">🔄 重试</button>
+                <button onclick="goHome()">🏠 返回首页</button>
+            </div>
         </div>
     </div>
 
     <footer>
-        <p>AISI Protocol Gateway v1.2 | AI原子服务互联网</p>
-        <p>网关将 aisi:// 协议转换为实际网页访问</p>
-        <p><a href="https://aisi-protocol.github.io/aisi-portal/">aisi-protocol.github.io</a></p>
+        <p><strong>AISI Protocol Gateway v1.2</strong> | 🌐 AI原子服务互联网</p>
+        <p>网关将 <code>aisi://</code> 协议转换为实际网页访问</p>
+        <p>
+            <a href="https://aisi-protocol.github.io/aisi-portal/">门户首页</a> | 
+            <a href="https://github.com/aisi-protocol/aisi-portal">GitHub仓库</a> | 
+            <a href="https://aisi.gateway.workers.dev/health">网关状态</a>
+        </p>
+        <p style="margin-top: 10px; font-size: 12px;">
+            © 2026 AISI Protocol. 服务已运行 <span id="uptime">--</span> 天
+        </p>
     </footer>
 
     <script>
-        // 修复后的JavaScript代码（已验证）
+        // 初始化 - 为示例代码添加点击事件
+        document.addEventListener('DOMContentLoaded', function() {
+            // 点击示例代码自动填充
+            document.querySelectorAll('.examples code').forEach(code => {
+                code.style.cursor = 'pointer';
+                code.title = '点击填充到输入框';
+                code.addEventListener('click', function() {
+                    document.getElementById('uri-input').value = this.textContent;
+                    document.getElementById('uri-input').focus();
+                });
+            });
+            
+            // 计算运行天数（从2026-01-20开始）
+            const startDate = new Date('2026-01-20');
+            const today = new Date();
+            const diffTime = Math.abs(today - startDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            document.getElementById('uptime').textContent = diffDays;
+        });
+        
+        // 主要解析函数
         async function resolveProtocol() {
             const uri = document.getElementById('uri-input').value.trim();
+            const originalUriElement = document.getElementById('original-uri');
+            const resultElement = document.getElementById('result');
+            const errorElement = document.getElementById('error');
+            const examplesElement = document.querySelector('.examples');
             
-            // 宽松验证：只检查前缀
+            // 隐藏其他区域
+            resultElement.style.display = 'none';
+            errorElement.style.display = 'none';
+            
+            // 基本验证
+            if (!uri) {
+                showError('请输入协议地址');
+                return;
+            }
+            
             if (!uri.startsWith('aisi://')) {
-                showError('请输入有效的 aisi:// 协议地址');
+                showError('协议地址必须以 <code>aisi://</code> 开头');
                 return;
             }
             
             try {
-                // 使用正确的端点
-                const apiUrl = `https://aisi.gateway.workers.dev/request?uri=${encodeURIComponent(uri)}`;
+                // 显示加载状态
+                const button = document.querySelector('button[onclick="resolveProtocol()"]');
+                const originalText = button.textContent;
+                button.textContent = '⏳ 解析中...';
+                button.disabled = true;
                 
+                // 调用网关
+                const apiUrl = `https://aisi.gateway.workers.dev/request?uri=${encodeURIComponent(uri)}`;
                 const response = await fetch(apiUrl);
                 
                 if (!response.ok) {
-                    throw new Error(`网关响应错误: ${response.status}`);
+                    throw new Error(`网关响应错误: ${response.status} ${response.statusText}`);
                 }
                 
                 const result = await response.json();
-                displayResult(result);
+                
+                // 显示结果
+                originalUriElement.textContent = uri;
+                document.getElementById('result-content').textContent = JSON.stringify(result, null, 2);
+                examplesElement.style.display = 'none';
+                resultElement.style.display = 'block';
+                
+                // 滚动到结果区域
+                resultElement.scrollIntoView({ behavior: 'smooth' });
                 
             } catch (error) {
                 showError(`解析失败: ${error.message}`);
+            } finally {
+                // 恢复按钮状态
+                const button = document.querySelector('button[onclick="resolveProtocol()"]');
+                button.textContent = originalText;
+                button.disabled = false;
             }
         }
         
-        // 其他辅助函数保持不变...
+        // 显示错误
+        function showError(message) {
+            document.getElementById('error-message').innerHTML = message;
+            document.querySelector('.examples').style.display = 'none';
+            document.getElementById('error').style.display = 'block';
+            document.getElementById('error').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // 复制结果
+        function copyResult() {
+            const resultText = document.getElementById('result-content').textContent;
+            navigator.clipboard.writeText(resultText).then(() => {
+                alert('结果已复制到剪贴板！');
+            }).catch(err => {
+                console.error('复制失败:', err);
+            });
+        }
+        
+        // 返回示例列表
+        function goBack() {
+            document.getElementById('result').style.display = 'none';
+            document.querySelector('.examples').style.display = 'block';
+            document.querySelector('.examples').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // 重试
+        function retry() {
+            document.getElementById('error').style.display = 'none';
+            document.querySelector('.examples').style.display = 'block';
+            document.getElementById('uri-input').focus();
+        }
+        
+        // 返回首页
+        function goHome() {
+            document.getElementById('uri-input').value = '';
+            document.getElementById('error').style.display = 'none';
+            document.querySelector('.examples').style.display = 'block';
+            document.getElementById('uri-input').focus();
+        }
+        
+        // 键盘快捷键支持
+        document.getElementById('uri-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                resolveProtocol();
+            }
+        });
     </script>
 </body>
 </html>
