@@ -1,0 +1,58 @@
+{
+  "name": "Weather-001",
+  "version": "1.0",
+  "description": "基础天气查询服务",
+  "provider": "AISI",
+  "namespace": "AISI",
+  "category": "weather",
+  "status": "active",
+  "endpoint": "internal://weather-service",
+  "parameters": {
+    "required": ["city"],
+    "optional": ["unit"],
+    "schema": {
+      "city": {
+        "type": "string",
+        "description": "城市名称，如：北京、上海",
+        "example": "北京"
+      },
+      "unit": {
+        "type": "string",
+        "description": "温度单位，celsius或fahrenheit",
+        "default": "celsius",
+        "enum": ["celsius", "fahrenheit"]
+      }
+    }
+  },
+  "response_format": {
+    "success": {
+      "temperature": "number",
+      "condition": "string",
+      "humidity": "number",
+      "unit": "string"
+    },
+    "error": {
+      "code": "string",
+      "message": "string"
+    }
+  },
+  "examples": [
+    {
+      "aisi_uri": "aisi://AISI/Weather-001?city=北京",
+      "description": "查询北京天气",
+      "expected_response": {
+        "temperature": 8,
+        "condition": "晴",
+        "humidity": 45,
+        "unit": "celsius"
+      }
+    },
+    {
+      "aisi_uri": "aisi://AISI/Weather-001?city=上海&unit=celsius",
+      "description": "查询上海天气（摄氏度）"
+    }
+  ],
+  "tags": ["weather", "api", "china"],
+  "created_at": "2026-01-20",
+  "updated_at": "2026-01-21"
+}
