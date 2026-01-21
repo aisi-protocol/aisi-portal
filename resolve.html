@@ -308,7 +308,7 @@
         <p>
             <a href="https://aisi-protocol.github.io/aisi-portal/">门户首页</a> | 
             <a href="https://github.com/aisi-protocol/aisi-portal">GitHub仓库</a> | 
-            <a href="https://aisi.gateway.workers.dev/health">网关状态</a>
+            <a href="https://aisi-gateway.aisiprotocol.workers.dev/health">网关状态</a>
         </p>
         <p style="margin-top: 10px; font-size: 12px;">
             © 2026 AISI Protocol. 服务已运行 <span id="uptime">--</span> 天
@@ -367,7 +367,7 @@
                 button.disabled = true;
                 
                 // 调用网关
-                const apiUrl = `https://aisi.gateway.workers.dev/request?uri=${encodeURIComponent(uri)}`;
+                const apiUrl = `https://aisi-gateway.aisiprotocol.workers.dev/request?uri=${encodeURIComponent(uri)}`;
                 const response = await fetch(apiUrl);
                 
                 if (!response.ok) {
